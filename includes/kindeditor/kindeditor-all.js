@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 4.1.5 (2013-01-20)
+* @version 4.1.6 (2013-03-24)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -17,7 +17,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.1.5 (2013-01-20)',
+var _VERSION = '4.1.6 (2013-03-24)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_GECKO = _ua.indexOf('gecko') > -1 && _ua.indexOf('khtml') == -1,
@@ -2603,7 +2603,10 @@ function _getInnerNode(knode) {
 	return inner;
 }
 function _isEmptyNode(knode) {
-	return knode.type == 1 && knode.html().replace(/<[^>]+>/g, '') === '';
+	if (knode.type != 1 || knode.isSingle()) {
+		return false;
+	}
+	return knode.html().replace(/<[^>]+>/g, '') === '';
 }
 function _mergeWrapper(a, b) {
 	a = a.clone(true);
@@ -2733,8 +2736,10 @@ _extend(KCmd, {
 			rng = range.get(true);
 			sel.removeAllRanges();
 			sel.addRange(rng);
-			var pos = K(rng.endContainer).pos();
-			win.scrollTo(pos.x, pos.y);
+			if (doc !== document) {
+				var pos = K(rng.endContainer).pos();
+				win.scrollTo(pos.x, pos.y);
+			}
 		}
 		win.focus();
 		return self;
@@ -3635,13 +3640,14 @@ _extend(KEdit, KWidget, {
 				});
 			}
 			if (_IE) {
-				K(document).mousedown(function() {
-					if (cmd.range.isControl()) {
+				self._mousedownHandler = function() {
+					var newRange = cmd.range.cloneRange();
+					newRange.shrink();
+					if (newRange.isControl()) {
 						self.blur();
 					}
-				});
-			}
-			if (_IE) {
+				};
+				K(document).mousedown(self._mousedownHandler);
 				K(doc).keydown(function(e) {
 					if (e.which == 8) {
 						cmd.selection();
@@ -3702,6 +3708,9 @@ _extend(KEdit, KWidget, {
 		K(doc.body).unbind();
 		K(doc).unbind();
 		K(self.win).unbind();
+		if (self._mousedownHandler) {
+			K(document).unbind('mousedown', self._mousedownHandler);
+		}
 		_elementVal(self.srcElement, self.html());
 		self.srcElement.show();
 		doc.write('');
@@ -4152,6 +4161,7 @@ _extend(KUploadButton, {
 			} else {
 				str = doc.body.innerHTML;
 			}
+			str = _unescape(str);
 			iframe[0].src = 'javascript:false';
 			try {
 				data = K.json(str);
@@ -5006,36 +5016,22 @@ KEditor.prototype = {
 		statusbar.removeClass('statusbar').addClass('ke-statusbar')
 			.append('<span class="ke-inline-block ke-statusbar-center-icon"></span>')
 			.append('<span class="ke-inline-block ke-statusbar-right-icon"></span>');
-		K(window).unbind('resize');
+		function fullscreenResizeHandler(e) {
+			if (self.isCreated) {
+				self.resize(_docElement().clientWidth, _docElement().clientHeight, false);
+			}
+		}
+		K(window).unbind('resize', fullscreenResizeHandler);
 		function initResize() {
 			if (statusbar.height() === 0) {
 				setTimeout(initResize, 100);
 				return;
 			}
-			self.resize(width, height);
+			self.resize(width, height, false);
 		}
 		initResize();
-		function newResize(width, height, updateProp) {
-			updateProp = _undef(updateProp, true);
-			if (width && width >= self.minWidth) {
-				self.resize(width, null);
-				if (updateProp) {
-					self.width = _addUnit(width);
-				}
-			}
-			if (height && height >= self.minHeight) {
-				self.resize(null, height);
-				if (updateProp) {
-					self.height = _addUnit(height);
-				}
-			}
-		}
 		if (fullscreenMode) {
-			K(window).bind('resize', function(e) {
-				if (self.isCreated) {
-					newResize(_docElement().clientWidth, _docElement().clientHeight, false);
-				}
-			});
+			K(window).bind('resize', fullscreenResizeHandler);
 			toolbar.select('fullscreen');
 			statusbar.first().css('visibility', 'hidden');
 			statusbar.last().css('visibility', 'hidden');
@@ -5051,7 +5047,7 @@ KEditor.prototype = {
 					clickEl : statusbar,
 					moveFn : function(x, y, width, height, diffX, diffY) {
 						height += diffY;
-						newResize(null, height);
+						self.resize(null, height);
 					}
 				});
 			} else {
@@ -5064,7 +5060,7 @@ KEditor.prototype = {
 					moveFn : function(x, y, width, height, diffX, diffY) {
 						width += diffX;
 						height += diffY;
-						newResize(width, height);
+						self.resize(width, height);
 					}
 				});
 			} else {
@@ -5097,17 +5093,26 @@ KEditor.prototype = {
 		self.isCreated = false;
 		return self;
 	},
-	resize : function(width, height) {
+	resize : function(width, height, updateProp) {
 		var self = this;
-		if (width !== null) {
-			if (_removeUnit(width) > self.minWidth) {
-				self.container.css('width', _addUnit(width));
+		updateProp = _undef(updateProp, true);
+		if (width) {
+			if (!/%/.test(width)) {
+				width = _removeUnit(width);
+				width = width < self.minWidth ? self.minWidth : width;
+			}
+			self.container.css('width', _addUnit(width));
+			if (updateProp) {
+				self.width = _addUnit(width);
 			}
 		}
-		if (height !== null && self.toolbar.div && self.statusbar) {
-			height = _removeUnit(height) - self.toolbar.div.height() - self.statusbar.height();
-			if (height > 0 && _removeUnit(height) > self.minHeight) {
-				self.edit.setHeight(height);
+		if (height) {
+			height = _removeUnit(height);
+			editHeight = _removeUnit(height) - self.toolbar.div.height() - self.statusbar.height();
+			editHeight = editHeight < self.minHeight ? self.minHeight : editHeight;
+			self.edit.setHeight(editHeight);
+			if (updateProp) {
+				self.height = _addUnit(height);
 			}
 		}
 		return self;
@@ -5122,6 +5127,9 @@ KEditor.prototype = {
 			return self.isCreated ? self.edit.html() : _elementVal(self.srcElement);
 		}
 		self.isCreated ? self.edit.html(val) : _elementVal(self.srcElement, val);
+		if (self.isCreated) {
+			self.cmd.selection();
+		}
 		return self;
 	},
 	fullHtml : function() {
@@ -5603,7 +5611,7 @@ _plugin('core', function(K) {
 			'</div>';
 		self.createDialog({
 			name : 'about',
-			width : 300,
+			width : 350,
 			title : self.lang('about'),
 			body : html
 		});
@@ -5919,7 +5927,7 @@ KindEditor.lang({
 	emoticons : '插入表情',
 	link : '超级链接',
 	unlink : '取消超级链接',
-	fullscreen : '全屏显示(Esc)',
+	fullscreen : '全屏显示',
 	about : '关于',
 	print : '打印(Ctrl+P)',
 	filemanager : '文件空间',
@@ -5982,6 +5990,7 @@ KindEditor.lang({
 	uploadError : '上传错误',
 	'plainpaste.comment' : '请使用快捷键(Ctrl+V)把内容粘贴到下面的方框里。',
 	'wordpaste.comment' : '请使用快捷键(Ctrl+V)把内容粘贴到下面的方框里。',
+	'code.pleaseInput' : '请输入程序代码。',
 	'link.url' : 'URL',
 	'link.linkType' : '打开类型',
 	'link.newWindow' : '新窗口',
@@ -6321,6 +6330,11 @@ KindEditor.plugin('code', function(K) {
 							code = textarea.val(),
 							cls = type === '' ? '' :  ' lang-' + type,
 							html = '<pre class="prettyprint' + cls + '">\n' + K.escape(code) + '</pre> ';
+						if (K.trim(code) === '') {
+							alert(lang.pleaseInput);
+							textarea[0].focus();
+							return;
+						}
 						self.insertHtml(html).hideDialog().focus();
 					}
 				}
@@ -6818,6 +6832,7 @@ KindEditor.plugin('flash', function(K) {
 KindEditor.plugin('image', function(K) {
 	var self = this, name = 'image',
 		allowImageUpload = K.undef(self.allowImageUpload, true),
+		allowImageRemote = K.undef(self.allowImageRemote, true),
 		formatUploadUrl = K.undef(self.formatUploadUrl, true),
 		allowFileManager = K.undef(self.allowFileManager, false),
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
@@ -7099,7 +7114,7 @@ KindEditor.plugin('image', function(K) {
 				imageHeight : img ? img.height() : '',
 				imageTitle : img ? img.attr('title') : '',
 				imageAlign : img ? img.attr('align') : '',
-				showRemote : true,
+				showRemote : allowImageRemote,
 				showLocal : allowImageUpload,
 				tabIndex: img ? 0 : imageTabIndex,
 				clickFn : function(url, title, width, height, border, align) {
@@ -7253,7 +7268,7 @@ KindEditor.plugin('insertfile', function(K) {
 	self.clickToolbar(name, function() {
 		self.plugin.fileDialog({
 			clickFn : function(url, title) {
-				var html = '<a href="' + url + '" data-ke-src="' + url + '" target="_blank">' + title + '</a>';
+				var html = '<a class="ke-insertfile" href="' + url + '" data-ke-src="' + url + '" target="_blank">' + title + '</a>';
 				self.insertHtml(html).hideDialog().focus();
 			}
 		});
@@ -7904,7 +7919,10 @@ KindEditor.plugin('multiimage', function(K) {
 				}
 			},
 			beforeRemove : function() {
-				swfupload.remove();
+				// IE9 bugfix: https://github.com/kindsoft/kindeditor/issues/72
+				if (!K.IE || K.V <= 8) {
+					swfupload.remove();
+				}
 			}
 		}),
 		div = dialog.div;

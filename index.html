@@ -3,8 +3,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>个人博客网</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <!-- <script src="./includes/jquery-1.9.1.min.js"></script> -->
+        <link href="./includes/jquery/jquery-ui.min.css" rel="stylesheet">
+        <script src="./includes/jquery/jquery.min.js"></script>
+        <script src="./includes/jquery/jquery-ui.min.js"></script>
+        <script>
+			$(function() {
+
+				$("#date_picker").datepicker({
+					inline : true
+				});
+
+			});
+        </script>
     </head>
     <body>
         <form action="./admin/doLogin.php" method="post">
@@ -26,5 +36,8 @@
             <input type="reset" value="重置" />
             <a href="./register.html">注册</a>
         </form>
+        <hr />
+        <!-- <div name="date_picker" id="date_picker"></div> -->
+        <input type="text" name="date_picker" id="date_picker" />
     </body>
 </html>

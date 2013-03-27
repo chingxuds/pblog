@@ -6,8 +6,4 @@ function dateFormat($time='0')
 {
 	return date($GLOBALS['date_format'],$time);
 }
-
-echo dateFormat(time());
-echo "<br />";
-echo dateFormat();
 ?>
