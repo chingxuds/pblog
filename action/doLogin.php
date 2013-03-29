@@ -1,10 +1,12 @@
 <?php
-require './includes/encrypt.php';
-require './includes/db.php';
+require './inc/encrypt.php';
+require './inc/db.php';
 
+// ** 获取前台传入数据 ** //
 $username = $_POST['username_input'];
 $userpass = code_md5($_POST['userpass_input']);
-echo $userpass;
+
+// ** 查询数据库验证信息 ** //
 $sql = "SELECT * FROM pb_users WHERE user_pass='$userpass' AND user_login='$username'";
 $result = doQuery($sql);
 if ($result === FALSE) {

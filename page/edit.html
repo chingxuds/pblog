@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>编写博客</title>
+        <style>
+			.all {
+				width: 800px;
+				border: solid 0.01px lightgray;
+			}
+			.top {
+				width: 800px;
+				border-top: dashed 0.01px lightgray;
+			}
+			.bottom {
+				width: 800px;
+				border-bottom: dashed 0.01px lightgray;
+			}
+        </style>
+        <script charset="utf-8" src="../includes/kindeditor/kindeditor-all-min.js"></script>
+        <script charset="utf-8" src="../includes/kindeditor/lang/zh_CN.js"></script>
+        <script>
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('#content', {
+					// width : '680px',
+					cssPath : '../includes/kindeditor/plugins/code/prettify.css',
+					uploadJson : '../includes/kindeditor/php/upload_json.php',
+					fileManagerJson : '../includes/kindeditor/php/file_manager_json.php',
+					allowFileManager : true,
+					afterCreate : function() {// 实现Ctrl + Enter 发表
+						var self = this;
+						K.ctrl(document, 13, function() {
+							self.sync();
+							K('#doPublish')[0].submit();
+						});
+						K.ctrl(self.edit.doc, 13, function() {
+							self.sync();
+							K('#doPublish')[0].submit();
+						});
+					}
+				});
+			});
+        </script>
+    </head>
+    <body>
+        <!-- 发布文章表单 -->
+        <form id="doPublish" name="doPublish" action="../action/doPublish.php" method="post">
+            <div class="all">
+                <div class="bottom">
+                    <input type="text" id="title" name="title" style="width : 800px;height : 20px;border: 0" value="请输入标题..."/>
+                </div>
+                <div>
+                    <textarea id="content" name="content" style="width : 799px;height : 600px;border: 0">请书写文章...</textarea>
+                </div>
+            </div>
+            <br />
+            <input type="button" id="publish" name="publish" value="发表" />
+            <input type="button" id="cancle" name="cancle" value="取消" />
+        </form>
+
+    </body>
+</html>

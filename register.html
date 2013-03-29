@@ -9,6 +9,8 @@
         <script src="./includes/js/common.js"></script>
         <script>
 			$(function() {
+			    
+				/** 登录验证函数 */
 				$("#pre_submit").click(function() {
 
 					$("#register_time").val(getCurrentFormatDate());
@@ -19,6 +21,7 @@
         </script>
     </head>
     <body>
+        <!-- 注册表单 -->
         <form id="doRegister" name="doRegister" action="./action/doRegister.php" method="post">
             <input type="hidden" id="register_time" name="register_time" />
             <table>
