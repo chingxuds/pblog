@@ -1,9 +1,123 @@
 @CHARSET "UTF-8";
+/** 工具栏样式 开始 **/
+#div_top_bar {
+	width: 100%;
+	float: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1000000;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 50px;
+	background-color: #F5F5F5;
+	border-bottom-style: solid;
+	border-bottom-width: thin;
+	border-bottom-color: #EEEEEE;
+	box-shadow: 0px 2px 6px rgba(100, 100, 100, 0.3);
+}
+#div_tool_bar {
+	width: 900px;
+}
+#div_nav {
+	width: auto;
+	float: left;
+	margin-left: inherit;
+	margin-right: inherit;
+}
+#div_topback {
+	float: right
+}
+#nav_user ul {
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: outside;
+	text-align: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+#nav_user ul li {
+	text-align: center;
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+/** 工具栏样式 结束 **/
+
+/** 前台页面总体样式 开始 **/
+body {
+	background-color: #E3E3E3;
+	font-family: "微软雅黑";
+}
+div {
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+}
+ul {
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: outside;
+	text-align: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+li {
+	margin: 0px;
+	padding: 0px;
+}
+#div_container {
+	background-color: #FFFFFF;
+	width: 900px;
+	height: auto;
+	min-height: 600px;
+	margin-top: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 0px 2px 6px rgba(100, 100, 100, 0.3);
+	overflow: hidden;
+	float: none;
+}
+#div_main {
+	margin-top: 10px;
+}
+#nav_menu ul {
+	border-top-style: solid;
+	border-top-width: thin;
+	border-top-color: #EDEDED;
+	border-bottom-style: solid;
+	border-bottom-width: thin;
+	border-bottom-color: #EDEDED;
+}
+#nav_menu ul li {
+	display: inline;
+	text-align: center;
+}
+#div_search {
+	width: 200px;
+	margin: 0;
+	padding: 0;
+	padding-right:3px;
+}
+#div_search input {
+	float: right;
+	margin: inherit;
+	padding: inherit;
+	border-color: #DDDDDD;
+	border-style: solid;
+	border-width: thin;
+	border-right-width: 0;
+}
+#button_search {
+	font: "微软雅黑";
+	font-size: 15px;
+/** 前台页面总体样式 结束 **/
 
 /** 页码样式 开始 **/
 div.pagination {
-	padding: 3px;
-	margin: 3px;
+ padding: 3px;
+ margin: 3px;
 }
 div.pagination a {
 	padding: 2px 5px 2px 5px;
