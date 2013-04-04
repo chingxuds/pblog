@@ -1,60 +1,25 @@
 @CHARSET "UTF-8";
-/** 工具栏样式 开始 **/
-#div_top_bar {
-	width: 100%;
-	float: none;
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 1000000;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 0px;
-	margin-bottom: 50px;
-	background-color: #F5F5F5;
-	border-bottom-style: solid;
-	border-bottom-width: thin;
-	border-bottom-color: #EEEEEE;
-	box-shadow: 0px 2px 6px rgba(100, 100, 100, 0.3);
-}
-#div_tool_bar {
-	width: 900px;
-}
-#div_nav {
-	width: auto;
-	float: left;
-	margin-left: inherit;
-	margin-right: inherit;
-}
-#div_topback {
-	float: right
-}
-#nav_user ul {
-	list-style-type: none;
-	list-style-image: none;
-	list-style-position: outside;
-	text-align: 0px;
-	margin: 0px;
-	padding: 0px;
-}
-#nav_user ul li {
-	text-align: center;
-	display: inline;
-	margin: 0px;
-	padding: 0px;
-}
-/** 工具栏样式 结束 **/
 
-/** 前台页面总体样式 开始 **/
-body {
-	background-color: #E3E3E3;
+/** 全局样式 开始 **/
+
+* {
 	font-family: "微软雅黑";
 }
+
+body {
+	/*background-color: #E3E3E3;*/
+	background-image:url(../images/apple-bg.jpg);
+	background-repeat:repeat;
+	background-position:center;
+	color: #444444;
+}
+
 div {
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
 }
+
 ul {
 	list-style-type: none;
 	list-style-image: none;
@@ -63,62 +28,242 @@ ul {
 	margin: 0px;
 	padding: 0px;
 }
-li {
+
+ul li {
 	margin: 0px;
 	padding: 0px;
 }
+
+.global-a a {
+	text-decoration: none;
+}
+
+.global-a a:link {
+	color: rgb(0, 115, 234);
+}
+
+.global-a a:visited {
+	color: rgb(255, 0, 132);
+}
+
+.global-a a:hover {
+	color: rgb(255,255,255);
+	background-color: rgb(0, 115, 234);
+	cursor: pointer;
+}
+.global-a a:actived {
+ color:rgb(255, 0, 132);
+ background-color:rgb(255,255,255);
+}
+
+/** 全局样式 结束 **/
+
+/** 工具栏样式 开始 **/
+
+#div_top_bar {
+	width: 100%;
+	float: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1000000;
+	margin: 0;
+	padding: 0;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #FFFFFF;
+	background-color: #464646;
+	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
+	overflow: hidden;
+}
+
+#div_tool_bar {
+	width: 1000px;
+	margin: auto;
+	padding: inherit;
+}
+
+#div_nav {
+	color: rgb(255,255,255);
+	width: auto;
+	float: left;
+	margin-left: inherit;
+	margin-right: inherit;
+	padding: inherit;
+}
+
+#div_topback {
+	float: right;
+	margin: auto;
+	padding: inherit;
+}
+
+#div_topback a {
+	text-decoration: none;
+	font-size: 14px;
+}
+
+#div_topback a:link {
+	color: #FFFFFF;
+}
+
+#div_topback a:visited {
+	color: #FFFFFF;
+}
+
+#div_topback a:hover {
+	color: #FFFFFF;
+	background-color: #252525;
+}
+#div_topback a:actived {
+ color:#FFFFFF;
+ background-color:#252525;
+}
+
+#nav_user ul {
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: outside;
+	text-align: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#nav_user ul li {
+	color: rgb(255,255,255);
+	text-align: center;
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+
+/** 工具栏样式 结束 **/
+
+/** 前台页面总体样式 开始 **/
+
 #div_container {
 	background-color: #FFFFFF;
-	width: 900px;
+	width: 1000px;
 	height: auto;
-	min-height: 600px;
+	min-height: 800px;
 	margin-top: 50px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	box-shadow: 0px 2px 6px rgba(100, 100, 100, 0.3);
+	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
 	overflow: hidden;
 	float: none;
 }
+
+#div_header {
+	float: none;
+	width: 1000px;
+	padding-left: 50px;
+}
+
 #div_main {
+	width: 1000px;
 	margin-top: 10px;
 }
+
 #nav_menu ul {
-	border-top-style: solid;
-	border-top-width: thin;
-	border-top-color: #EDEDED;
-	border-bottom-style: solid;
-	border-bottom-width: thin;
-	border-bottom-color: #EDEDED;
 }
+
 #nav_menu ul li {
 	display: inline;
 	text-align: center;
 }
+
+#div_sider {
+	float: right;
+	width: 200px;
+	margin-right: 50px;
+}
+
 #div_search {
 	width: 200px;
 	margin: 0;
 	padding: 0;
-	padding-right:3px;
+	padding-right: 3px;
+	overflow: hidden;
 }
-#div_search input {
+
+#div_search {
+	float: none;
+	height: 41px;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#button_search {
 	float: right;
-	margin: inherit;
-	padding: inherit;
+	height: 41px;
+	width: 50px;
+	overflow: hidden;
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+}
+
+#text_search {
+	float: right;
+	height: 39px;
+	width: 149px;
+	margin: 0;
+	padding: 0;
 	border-color: #DDDDDD;
 	border-style: solid;
 	border-width: thin;
 	border-right-width: 0;
 }
-#button_search {
-	font: "微软雅黑";
-	font-size: 15px;
+
+#div_content {
+	width: 700px;
+	margin-right: 20px;
+	float: right;
+}
+
+.article-style {
+	background-image: url(../images/content.jpg);
+	background-repeat: repeat;
+	padding: 20px;
+	padding-top: 0;
+	margin: 10px;
+	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
+}
+
+.latest-style{
+	margin-top:10px;
+	padding-left:10px;
+	border-style: dashed;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+	border-top-color: #444444;
+	border-top-width: thin;
+}
 /** 前台页面总体样式 结束 **/
 
-/** 页码样式 开始 **/
-div.pagination {
- padding: 3px;
- margin: 3px;
+/** 文章样式 开始 **/
+
+.article-author {
+	font-size: 14px;
 }
+
+.article-other {
+	font-size: 12px;
+}
+
+/** 文章样式 结束 **/
+
+/** 页码样式 开始 **/
+
+div.pagination {
+	padding: 3px;
+	margin: 3px;
+}
+
 div.pagination a {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;
@@ -126,10 +271,12 @@ div.pagination a {
 	text-decoration: none; /* no underline */
 	color: #000099;
 }
+
 div.pagination a:hover, div.pagination a:active {
 	border: 1px solid #000099;
 	color: #000;
 }
+
 div.pagination span.current {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;
@@ -138,6 +285,7 @@ div.pagination span.current {
 	background-color: #000099;
 	color: #FFF;
 }
+
 div.pagination span.disabled {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;

@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页</title>
+<link href="./includes/jquery/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="./includes/css/common.css" rel="stylesheet" type="text/css">
+<script src="./includes/jquery/jquery.min.js"></script>
+<script src="./includes/jquery/jquery-ui.min.js"></script>
+<script src="./includes/js/common.js"></script>
+<script>
+$(function() {
+		
+		$( "#list" ).accordion({ active: 1 });
+		
+		
+});
+</script>
+</head>
+
+<body>
+<div id="topest"></div>
+<div id="div_top_bar">
+    <div id="div_tool_bar">
+        <div id="div_nav">
+            <nav id="nav_user">
+                <ul>
+                    <li>欢迎你</li>
+                    <li>用户名</li>
+                    <li>功能一</li>
+                    <li>功能二</li>
+                </ul>
+            </nav>
+        </div>
+        <div id="div_topback"><a href="#topest">&nbsp;回到顶部&nbsp;</a></div>
+    </div>
+</div>
+<div id="div_container">
+    <div id="div_header">
+        <header id="header">
+            <hgroup id="hgroup">
+                <h1>个人博客网</h1>
+                <H4>用来完成毕设的个人博客网站</H4>
+            </hgroup>
+            <nav id="nav_menu" style="float:none">
+                <ul id="nav_menu_ul">
+                    <li><a href="#div_content">首页</a></li>
+                    <li><a href="#div_content">心情</a></li>
+                    <li><a href="#div_content">文章列表</a></li>
+                    <li><a href="#div_content">类别列表</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <div id="div_main">
+        <div id="div_sider"  class="global-a">
+            <div id="div_search">
+                <input type="button" id="button_search" value="搜索" />
+                <input type="text" id="text_search" name="search_title" />
+            </div>
+            <div id="list" class="global-a">
+                    <h4 id="user-man-h">个人信息</h4>
+                    <div id="user-man-d">
+                        <ul>
+                            <li><a href="#">查看</a></li>
+                            <li><a href="#">增加</a></li>
+                            <li><a href="#">改变</a></li>
+                            <li><a href="#">删除</a></li>
+                        </ul>
+                    </div>
+                <h4 id="post-man-h">文章管理</h4>
+                <div id="post-man-d">
+                    <ul>
+                        <li><a href="#">查看</a></li>
+                        <li><a href="#">增加</a></li>
+                        <li><a href="#">改变</a></li>
+                        <li><a href="#">删除</a></li>
+                    </ul>
+                </div>
+                <h4 id="com-man-h">评论管理</h4>
+                <div id="com-man-d">
+                    <ul>
+                        <li><a href="#">查看</a></li>
+                        <li><a href="#">增加</a></li>
+                        <li><a href="#">改变</a></li>
+                        <li><a href="#">删除</a></li>
+                    </ul>
+                </div>
+                <h4 id="type-man-h">类别管理</h4>
+                <div id="type-man-d">
+                    <ul>
+                        <li><a href="#">查看</a></li>
+                        <li><a href="#">增加</a></li>
+                        <li><a href="#">改变</a></li>
+                        <li><a href="#">删除</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="div_content" class="global-a"> </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

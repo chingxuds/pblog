@@ -33,6 +33,7 @@ ______________________________________________
 +-- README.txt [ #file# 项目说明文档，即本文档 ]
 +-- register.html [ #file# 注册页面 ]
 +-- temp-index.html [ #file# 主页模板页面 ]
++-- temp-list.html [ #file# 搜索以及文章列表模板页面 ]
++-- temp-manage.html [ #file# 管理模板页面 ]
 +-- temp-post.html [ #file# 文章模板页面 ]
-+-- temp-postlist.html [ #file# 搜索以及文章列表模板页面 ]
 +-- test.php [ #TODO# #file# 临时测试页面 ]
