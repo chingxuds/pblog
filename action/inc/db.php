@@ -1,5 +1,5 @@
 <?php
-require 'action/inc/db-config.php';
+require 'db-config.php';
 
 // ** MySQL 连接 ** //
 /**

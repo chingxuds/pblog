@@ -1,18 +1,17 @@
 <?php
-require 'action/inc/encrypt.php';
-require 'action/inc/dateformat.php';
-require 'action/inc/db.php';
-
-// ** 若会话尚未开启，则开启之 ** //
-if (session_status () == PHP_SESSION_NONE) {
-	session_start ();
-}
+require './inc/encrypt.php';
+require './inc/dateformat.php';
+require './inc/db.php';
+require './inc/session.php';
 
 // ** 根据动作参数调用不同函数 ** //
-$action = $_POST ['action'];
+$action = $_POST ['action'] ? $_POST ['action'] : $_GET ['action'];
 switch ($action) {
 	case 'login' :
 		login ();
+		break;
+	case 'logout' :
+		logout ();
 		break;
 	case 'register' :
 		register ();
@@ -44,6 +43,11 @@ function login() {
 		$_SESSION ["user"] = $user;
 		header ( 'Location:../index.php' );
 	}
+}
+function logout() {
+	$_SESSION ["isLogin"] = FALSE;
+	unset ( $_SESSION ["user"] );
+	header ( 'Location:../index.php' );
 }
 
 /**
