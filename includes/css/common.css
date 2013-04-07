@@ -2,11 +2,6 @@
 
 /** 全局样式 开始 **/
 
-
-
-
-
-
 * {
 	font-family: "微软雅黑";
 }
@@ -177,11 +172,6 @@ ul li {
 
 /** 前台页面总体样式 开始 **/
 
-
-
-
-
-
 #div_container {
 	background-color: #FFFFFF;
 	width: 1000px;
@@ -300,6 +290,10 @@ ul li {
 
 .article-other {
 	font-size: 12px;
+}
+
+.manage-content-style{
+	padding-left:20px;
 }
 
 /** 文章样式 结束 **/

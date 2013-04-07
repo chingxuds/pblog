@@ -33,12 +33,12 @@ $(function() {
 			<div id="div_nav">
 				<nav id="nav_user" class="navbar">
                             <?php include 'nav-bar.php';?>
-				</nav>
+			 </nav>
 			</div>
 			<div id="div_topback" class="navbar">
 				<a href="#topest">&nbsp;回到顶部&nbsp;</a>
 			</div>
-		</div>
+		</div> 
 	</div>
 	<div id="div_container">
 		<div id="div_header">
