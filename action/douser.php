@@ -4,9 +4,10 @@ require './inc/dateformat.php';
 require './inc/db.php';
 require './inc/session.php';
 require './dometa.php';
+require './inc/protect.php';
 
 // ** 根据动作参数调用不同函数 ** //
-$action = $_POST ['action'] ? $_POST ['action'] : $_GET ['action'];
+$action = get_parameter_once ( 'action' );
 switch ($action) {
 	case 'login' :
 		login ();
@@ -30,8 +31,8 @@ switch ($action) {
  */
 function login() {
 	// ** 获取前台传入数据 ** //
-	$username = $_POST ['username_input'];
-	$userpass = code_md5 ( $_POST ['userpass_input'] );
+	$username = get_parameter_once ( 'username_input' );
+	$userpass = code_md5 ( get_parameter_once ( 'userpass_input' ) );
 	
 	// ** 查询数据库验证信息 ** //
 	$sql = create_select_string ( "user_id,user_displayname,user_status", "pb_users", "user_pass='$userpass' AND user_login='$username'" );
@@ -67,12 +68,12 @@ function logout() {
  */
 function register() {
 	// ** 获取前台传入数据 ** //
-	$username = $_POST ['username_input'];
-	$userpass = code_md5 ( $_POST ['userpass_input'] );
-	$nicename = $_POST ['nicename_input'];
+	$username = get_parameter_once ( 'username_input' );
+	$userpass = code_md5 ( get_parameter_once ( 'userpass_input' ) );
+	$nicename = get_parameter_once ( 'nicename_input' );
 	$displayname = $nicename;
-	$useremail = $_POST ['useremail_input'];
-	$register_time = dateFormat ( date_timestamp_get ( date_create ( $_POST ['register_time'] ) ) );
+	$useremail = get_parameter_once ( 'useremail_input' );
+	$register_time = dateFormat ( date_timestamp_get ( date_create ( get_parameter_once ( 'register_time' ) ) ) );
 	$register_time_gmt = dateFormat ( $_SERVER ['REQUEST_TIME'] );
 	$status = 0;
 	
@@ -91,12 +92,12 @@ function profile_update() {
 	$object_type = "user";
 	$object_id = $_SESSION ['user'] ['id'];
 	
-	$lastname = isset ( $_POST ['lastname'] ) ? $_POST ['lastname'] : FALSE;
-	$firstname = isset ( $_POST ['firstname'] ) ? $_POST ['firstname'] : FALSE;
-	$nicename = isset ( $_POST ['nicename'] ) ? $_POST ['nicename'] : FALSE;
-	$displayname = isset ( $_POST ['displayname'] ) ? $_POST ['displayname'] : FALSE;
-	$email = isset ( $_POST ['email'] ) ? $_POST ['email'] : FALSE;
-	$tel = isset ( $_POST ['tel'] ) ? $_POST ['tel'] : FALSE;
+	$lastname = get_parameter_once ( 'lastname' );
+	$firstname = get_parameter_once ( 'firstname' );
+	$nicename = get_parameter_once ( 'nicename' );
+	$displayname = get_parameter_once ( 'displayname' );
+	$email = get_parameter_once ( 'email' );
+	$tel = get_parameter_once ( 'tel' );
 	
 	if ($lastname) {
 		meta_update ( $object_type, $object_id, "lastname", $lastname );

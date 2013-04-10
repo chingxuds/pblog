@@ -34,6 +34,11 @@ ul li {
 	padding: 0px;
 }
 
+table {
+	border-width: 0;
+	border-color: rgb(0, 115, 234);
+}
+
 .global-a a {
 	text-decoration: none;
 }
@@ -52,16 +57,50 @@ ul li {
 	cursor: pointer;
 }
 .global-a a:actived {
- color:rgb(255, 0, 132);
- background-color:rgb(255,255,255);
+	color: rgb(255, 0, 132);
+	background-color: rgb(255,255,255);
+}
+
+.tags-hover {
+	color: rgb(255,255,255);
+	background-color: rgb(0, 115, 234);
+	cursor: pointer;
+}
+.tags-checked {
+	color: rgb(255,255,255);
+	background-color: rgb(0, 115, 234);
+	cursor: pointer;
+}
+
+.input-label {
+	height: 38px;
+	color: rgb(0, 115, 234);
+	background-color: rgb(255, 255, 255);
+	border-color: #CCCCCC;
+	border-style: solid;
+	border-width: thin;
+	font-size: 20px;
+	text-align: center;
+}
+
+.input-text {
+	height: 40px;
+	margin: 0;
+	padding: 0;
+	padding-left: 5px;
+	border-color: #CCCCCC;
+	border-style: solid;
+	border-width: thin;
+	font-size: 20px;
+}
+
+.input-text-default {
+	color: #BBBBBB;
 }
 
 /** 全局样式 结束 **/
 
 /** 工具栏样式 开始 **/
-
-
-
 
 #div_top_bar {
 	width: 100%;
@@ -106,7 +145,7 @@ ul li {
 	float: left;
 	margin: auto;
 	border-left: solid thin #252525;
-	cursor:default;
+	cursor: default;
 }
 
 .navbar ul {
@@ -151,19 +190,27 @@ ul li {
 	color: #FFFFFF;
 	background-color: #252525;
 }
- .navbar a:actived {
- margin: 0;
- color:#FFFFFF;
- background-color:#252525;
+.navbar a:actived {
+	margin: 0;
+	color: #FFFFFF;
+	background-color: #252525;
 }
 
 .comments_icon {
+	width: 16px;
+	height: 16px;
+	background: url(../images/admin-bar-sprite.png);
+	background-position: -2px -132px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+.new_post_icon {
 	width: 16px;
 	;
 	height: 16px;
 	;
 	background: url(../images/admin-bar-sprite.png);
-	background-position: -1px -134px;
+	background-position: -2px -180px;
 	background-repeat: no-repeat;
 	background-color: transparent;
 }
@@ -171,6 +218,8 @@ ul li {
 /** 工具栏样式 结束 **/
 
 /** 前台页面总体样式 开始 **/
+
+/** 标题区样式 开始 **/
 
 #div_container {
 	background-color: #FFFFFF;
@@ -204,6 +253,10 @@ ul li {
 	text-align: center;
 }
 
+/** 标题区样式 结束 **/
+
+/** 侧边栏样式 开始 **/
+
 #div_sider {
 	float: right;
 	width: 200px;
@@ -211,15 +264,8 @@ ul li {
 }
 
 #div_search {
-	width: 200px;
-	margin: 0;
-	padding: 0;
-	padding-right: 3px;
-	overflow: hidden;
-}
-
-#div_search {
 	float: none;
+	width: 200px;
 	height: 41px;
 	width: auto;
 	margin: 0;
@@ -247,21 +293,7 @@ ul li {
 	border-style: solid;
 	border-width: thin;
 	border-right-width: 0;
-}
-
-#div_content {
-	width: 700px;
-	margin-right: 20px;
-	float: right;
-}
-
-.article-style {
-	background-image: url(../images/content.jpg);
-	background-repeat: repeat;
-	padding: 20px;
-	padding-top: 0;
-	margin: 10px;
-	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
+	font-size: 18px;
 }
 
 .latest-style {
@@ -275,14 +307,26 @@ ul li {
 	border-top-width: thin;
 }
 
-/** 前台页面总体样式 结束 **/
+/** 侧边栏样式 结束 **/
+
+/** 内容区样式 开始 **/
+
+#div_content {
+	width: 700px;
+	margin-right: 20px;
+	float: right;
+}
 
 /** 文章样式 开始 **/
 
-
-
-
-
+.article-style {
+	background-image: url(../images/content.jpg);
+	background-repeat: repeat;
+	padding: 20px;
+	padding-top: 0;
+	margin: 10px;
+	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
+}
 
 .article-author {
 	font-size: 14px;
@@ -292,18 +336,62 @@ ul li {
 	font-size: 12px;
 }
 
-.manage-content-style{
-	padding-left:20px;
+.manage-content-style {
+	margin-left: 20px;
+	padding: 0;
 }
 
 /** 文章样式 结束 **/
 
+.post-button-style {
+	float: left;
+	height: 41px;
+	width: 100px;
+	overflow: hidden;
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+}
+.post-input-style {
+	float: left;
+	height: 39px;
+	width: 525px;
+	margin: 0;
+	padding: 0;
+	border-color: #DDDDDD;
+	border-style: solid;
+	border-width: thin;
+	border-left-width: 0;
+	font-size: 18px;
+}
+
+.add-tags-list{
+	color: rgb(0, 115, 234);
+	margin: 10px;
+}
+
+.add-tags-list ul {
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: outside;
+	text-align: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.add-tags-list ul li {
+	text-align: center;
+	display: inline;
+	margin: 10px;
+	padding: 0;
+}
+
+
+/** 内容区样式 结束 **/
+
+/** 前台页面总体样式 结束 **/
+
 /** 页码样式 开始 **/
-
-
-
-
-
 
 div.pagination {
 	padding: 3px;

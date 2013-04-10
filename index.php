@@ -28,70 +28,11 @@ $(function() {
 
 <body>
 	<div id="topest"></div>
-	<div id="div_top_bar" class="navbar-a">
-		<div id="div_tool_bar">
-			<div id="div_nav">
-				<nav id="nav_user" class="navbar">
-                            <?php include 'nav-bar.php';?>
-			 </nav>
-			</div>
-			<div id="div_topback" class="navbar">
-				<a href="#topest">&nbsp;回到顶部&nbsp;</a>
-			</div>
-		</div> 
-	</div>
+     <?php include 'nav-bar.php';?>
 	<div id="div_container">
-		<div id="div_header">
-			<header id="header">
-				<hgroup id="hgroup">
-					<h1>个人博客网</h1>
-					<H4>用来完成毕设的个人博客网站</H4>
-				</hgroup>
-				<nav id="nav_menu" style="float: none">
-					<ul id="nav_menu_ul">
-						<li id="current_page" class="ui-state-active"><a
-							href="#div_content">首页</a></li>
-						<li><a href="#div_content">心情</a></li>
-						<li><a href="#div_content">文章列表</a></li>
-						<li><a href="#div_content">类别列表</a></li>
-					</ul>
-				</nav>
-			</header>
-		</div>
+		<?php include 'header.php';?>
 		<div id="div_main">
-			<div id="div_sider" class="global-a">
-				<div id="div_search">
-					<input type="button" id="button_search" value="搜索" /> <input
-						type="text" id="text_search" name="search_title" />
-				</div>
-				<div id="div_post_latest">
-					<H4>近期文章</H4>
-					<ul>
-						<li><a>第n篇</a></li>
-						<li><a>第n篇</a></li>
-						<li><a>第n篇</a></li>
-						<li><a>第n篇</a></li>
-					</ul>
-				</div>
-				<div id="div_comment_latest">
-					<H4>文章归档</H4>
-					<ul>
-						<li><a>2013年03月</a></li>
-						<li><a>2013年03月</a></li>
-						<li><a>2013年03月</a></li>
-						<li><a>2013年03月</a></li>
-					</ul>
-				</div>
-				<div id="div_term">
-					<H4>类别</H4>
-					<ul>
-						<li><a>心情</a></li>
-						<li><a>随笔</a></li>
-						<li><a>科技</a></li>
-						<li><a>八卦</a></li>
-					</ul>
-				</div>
-			</div>
+			<?php include 'siderbar-list.php';?>
 			<div id="div_content">
 				<div class="article-style">
 					<article id="article1" class="global-a">

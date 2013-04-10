@@ -2,9 +2,10 @@
 require '../action/inc/db.php';
 require '../action/inc/session.php';
 require '../action/dometa.php';
+require '../action/inc/protect.php';
 
 // ** 根据动作参数调用不同函数 ** //
-$action = isset ( $_POST ['action'] ) ? $_POST ['action'] : (isset ( $_GET ['action'] ) ? $_GET ['action'] : NULL);
+$action = get_parameter_once ( 'action' );
 switch ($action) {
 	case 'profile_view' :
 		profile_view ();

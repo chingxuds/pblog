@@ -1,4 +1,5 @@
 <?php
+require './inc/protect.php';
 
 /**
  * 通用元信息更新函数

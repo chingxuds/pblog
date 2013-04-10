@@ -59,8 +59,12 @@ function doQuery($sql) {
  *        	查询条件
  * @return string SQL选择语句
  */
-function create_select_string($select_items, $tbl_name, $where) {
-	return "SELECT " . $select_items . " FROM " . $tbl_name . " WHERE " . $where;
+function create_select_string($select_items, $tbl_name, $where = FALSE) {
+	if (! $where) {
+		return "SELECT " . $select_items . " FROM " . $tbl_name;
+	} else {
+		return "SELECT " . $select_items . " FROM " . $tbl_name . " WHERE " . $where;
+	}
 }
 
 /**
@@ -78,7 +82,7 @@ function create_insert_string($tbl_name, $set) {
 
 /**
  * SQL更新语句生成函数
- * 
+ *
  * @param string $tbl_name
  *        	更新表名
  * @param string $set
@@ -87,7 +91,11 @@ function create_insert_string($tbl_name, $set) {
  *        	更新条件
  * @return string SQL更新语句
  */
-function create_update_string($tbl_name, $set, $where) {
-	return "UPDATE " . $tbl_name . " SET " . $set . " WHERE " . $where;
+function create_update_string($tbl_name, $set, $where = FALSE) {
+	if (! $where) {
+		return "UPDATE " . $tbl_name . " SET " . $set . " WHERE " . $where;
+	} else {
+		return "UPDATE " . $tbl_name . " SET " . $set;
+	}
 }
 ?>

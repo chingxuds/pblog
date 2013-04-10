@@ -1,4 +1,5 @@
 <?php
+require './inc/protect.php';
 
 function publish() {
     /** 获取传入数据 */
