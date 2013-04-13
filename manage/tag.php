@@ -1,6 +1,6 @@
 <?php
-require '../action/inc/session.php';
-require '../action/inc/protect.php';
+require_once 'action/inc/session.php';
+require_once 'action/inc/protect.php';
 ?>
 <!doctype html>
 <html>
@@ -25,12 +25,12 @@ require '../action/inc/protect.php';
 
 <body>
 	<div id="topest"></div>
-        <?php include '../nav-bar.php';	?>
+        <?php require_once '../nav-bar.php';	?>
         <div id="div_container">
-		<?php include '../header.php';?>
+		<?php require_once '../header.php';?>
 		<div id="div_main">
 			<div id="div_sider" class="global-a">
-                    <?php include '../siderbar-manage.php';?>
+                    <?php require_once '../siderbar-manage.php';?>
                 </div>
 			<div id="div_content"></div>
 		</div>

@@ -42,9 +42,9 @@
 	</script>
 </head>
 <body>
-	<?php echo $htmlData; ?>
+	<?=$htmlData; ?>
 	<form name="example" method="post" action="demo.php">
-		<textarea name="content1" style="width:700px;height:200px;visibility:hidden;"><?php echo htmlspecialchars($htmlData); ?></textarea>
+		<textarea name="content1" style="width:700px;height:200px;visibility:hidden;"><?=htmlspecialchars($htmlData); ?></textarea>
 		<br />
 		<input type="submit" name="button" value="提交内容" /> (提交快捷键: Ctrl + Enter)
 	</form>

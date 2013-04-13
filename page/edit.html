@@ -17,16 +17,16 @@
 				border-bottom: dashed 0.01px lightgray;
 			}
         </style>
-        <script charset="utf-8" src="../includes/kindeditor/kindeditor-all-min.js"></script>
-        <script charset="utf-8" src="../includes/kindeditor/lang/zh_CN.js"></script>
+        <script charset="utf-8" src="../require_onces/kindeditor/kindeditor-all-min.js"></script>
+        <script charset="utf-8" src="../require_onces/kindeditor/lang/zh_CN.js"></script>
         <script>
 			var editor;
 			KindEditor.ready(function(K) {
 				editor = K.create('#content', {
 					// width : '680px',
-					cssPath : '../includes/kindeditor/plugins/code/prettify.css',
-					uploadJson : '../includes/kindeditor/php/upload_json.php',
-					fileManagerJson : '../includes/kindeditor/php/file_manager_json.php',
+					cssPath : '../require_onces/kindeditor/plugins/code/prettify.css',
+					uploadJson : '../require_onces/kindeditor/php/upload_json.php',
+					fileManagerJson : '../require_onces/kindeditor/php/file_manager_json.php',
 					allowFileManager : true,
 					afterCreate : function() {// 实现Ctrl + Enter 发表
 						var self = this;

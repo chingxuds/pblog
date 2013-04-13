@@ -1,5 +1,19 @@
 <?php
-require 'db-config.php';
+// ** MySQL 配置 ** //
+/** PBlog 数据库的名称 */
+define('DB_NAME', 'pblog');
+
+/** MySQL 数据库用户名 */
+define('DB_USER', 'root');
+
+/** MySQL 数据库密码 */
+define('DB_PASSWORD', 'root');
+
+/** MySQL 主机 */
+define('DB_HOST', 'localhost');
+
+/** 创建数据表时默认的文字编码 */
+define('DB_CHARSET', 'utf8');
 
 // ** MySQL 连接 ** //
 /**
@@ -40,7 +54,7 @@ function doQuery($sql) {
 	if ($sql != '') {
 		$link = creatLink ();
 		mysqli_set_charset ( $link, 'utf8' );
-		$result = mysqli_query ( $link, $sql );
+		$result = mysqli_query ( $link, $sql ) or die($sql . '<br>' . mysqli_error($link));
 		closeLink ( $link );
 		return $result;
 	} else {
@@ -59,12 +73,8 @@ function doQuery($sql) {
  *        	查询条件
  * @return string SQL选择语句
  */
-function create_select_string($select_items, $tbl_name, $where = FALSE) {
-	if (! $where) {
-		return "SELECT " . $select_items . " FROM " . $tbl_name;
-	} else {
-		return "SELECT " . $select_items . " FROM " . $tbl_name . " WHERE " . $where;
-	}
+function create_select_string($select_items, $tbl_name, $where = "") {
+	return "SELECT " . $select_items . " FROM " . $tbl_name . " " . $where;
 }
 
 /**
@@ -91,11 +101,32 @@ function create_insert_string($tbl_name, $set) {
  *        	更新条件
  * @return string SQL更新语句
  */
-function create_update_string($tbl_name, $set, $where = FALSE) {
-	if (! $where) {
-		return "UPDATE " . $tbl_name . " SET " . $set . " WHERE " . $where;
+function create_update_string($tbl_name, $set, $where = "") {
+	return "UPDATE " . $tbl_name . " SET " . $set . " " . $where;
+}
+
+/**
+ * 父类个数查询函数
+ *
+ * @param string $tbl_name
+ *        	查询表的表名
+ * @param string $col_name
+ *        	查询列的列名
+ * @param string $id_name
+ *        	父类id的列名
+ * @param int $parent_id
+ *        	父类id的值
+ * @return number 父类个数
+ */
+function find_parent_count($tbl_name, $col_name, $id_name, $parent_id) {
+	if ($parent_id == 0) {
+		return 0;
 	} else {
-		return "UPDATE " . $tbl_name . " SET " . $set;
+		$where = "WHERE $id_name='$parent_id'";
+		$sql = create_select_string ( $col_name, $tbl_name, $where );
+		$arr = mysqli_fetch_assoc ( doQuery ( $sql ) );
+		
+		return find_parent_count ( $tbl_name, $col_name, $id_name, $arr [$col_name] ) + 1;
 	}
 }
 ?>

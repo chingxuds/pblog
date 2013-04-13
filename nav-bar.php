@@ -16,7 +16,7 @@ if (! $_SESSION ["isLogin"]) {
 				<div style="display: block">&nbsp;</div>
 				<div id="dialog_login" title="登录">
 					<!-- 登录表单 -->
-					<form id="dologin" action="/pblog/action/douser.php" method="post">
+					<form id="dologin" action="/pblog/action/user.php" method="post">
 						<input type="hidden" id="action" name="action" value="login" />
 						<table>
 							<tr>
@@ -36,7 +36,7 @@ if (! $_SESSION ["isLogin"]) {
 
 					<!-- 注册表单 -->
 					<form id="doRegister" name="doRegister"
-						action="/pblog/action/douser.php" method="post">
+						action="/pblog/action/user.php" method="post">
 						<input type="hidden" id="action" name="action" value="register" />
 						<input type="hidden" id="register_time" name="register_time" />
 						<table>
@@ -119,20 +119,20 @@ if (! $_SESSION ["isLogin"]) {
 } else {
 ?>
 <div>
-					<a href="/pblog/manage/?action=profile_view" title="查看个人资料"><span><?php echo $_SESSION["user"]["displayname"]?></span></a>
+					<a href="/pblog/manage/?action=profile_view" title="查看个人资料"><span><?=$_SESSION["user"]["displayname"]?></span></a>
 				</div>
 				<div>
 					<a href="#" title="N条回复"><span class="comments_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span><span>&nbsp;&nbsp;25</span></a>
 				</div>
 				<div>
-					<a href="/pblog/page/edit.php#div_content" title="撰写新文章"><span
+					<a href="/pblog/manage/post-new.php" title="撰写新文章"><span
 						class="new_post_icon">&nbsp;&nbsp;&nbsp;&nbsp;</span><span>新建</span></a>
 				</div>
 				<div>
 					<a href="/pblog/dashboard.php" title="仪表盘"><span>仪表盘</span></a>
 				</div>
 				<div>
-					<a href="/pblog/action/douser.php?action=logout" title="退出登录"><span>登出</span></a>
+					<a href="/pblog/action/user.php?action=logout" title="退出登录"><span>登出</span></a>
 				</div>
 				<div style="display: block">&nbsp;</div>
 <?php }?>

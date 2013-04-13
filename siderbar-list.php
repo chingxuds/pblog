@@ -8,28 +8,45 @@
 	<div id="div_post_latest">
 		<H4>近期文章</H4>
 		<ul>
-			<li><a>第n篇</a></li>
-			<li><a>第n篇</a></li>
-			<li><a>第n篇</a></li>
-			<li><a>第n篇</a></li>
+		<?php
+		$posts_latest = application ( 'posts_latest' );
+		foreach ( $posts_latest as $index => $post ) {
+			if (is_array ( $post )) {
+				?>
+			<li><a href="<?=$post['url'] ?>"
+				title="链向 <?=$post['title'] ?> 的固定链接" rel="bookmark">《<?=$post['title'] ?>》</a></li>
+				<?php
+			}
+		}
+		?>
 		</ul>
 	</div>
 	<div id="div_comment_latest">
 		<H4>文章归档</H4>
 		<ul>
-			<li><a>2013年03月</a></li>
-			<li><a>2013年03月</a></li>
-			<li><a>2013年03月</a></li>
-			<li><a>2013年03月</a></li>
+		<?php
+		$archives = application ( 'archives' );
+		foreach ( $archives as $index => $archive ) {
+			?>
+			<li><a href="?year=<?=$archive['year']?>&month=<?=$archive['month']?> "><?=$archive['date']?>（<?=$archive['count']?>）</a></li>
+			<?php
+		}
+		?>
 		</ul>
 	</div>
 	<div id="div_term">
 		<H4>类别</H4>
 		<ul>
-			<li><a>心情</a></li>
-			<li><a>随笔</a></li>
-			<li><a>科技</a></li>
-			<li><a>八卦</a></li>
+		<?php
+		$categories = application ( 'categories' );
+		foreach ( $categories as $id => $cat ) {
+			if (0 != $id) {
+				?>
+			<li><a><?=$cat['name'] ?>（<?=$cat['count'] ?>）</a></li>
+		<?php
+			}
+		}
+		?>
 		</ul>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-require 'action/inc/paginate.php';
+require_once 'action/inc/paginate.php';
 
 $cur_page = $_GET ['page'];
 $targetpage = 'test.php';

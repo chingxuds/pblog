@@ -1,6 +1,6 @@
 <?php
-require '../action/inc/session.php';
-require '../action/inc/protect.php';
+require_once '../action/inc/session.php';
+require_once '../action/inc/protect.php';
 ?>
 <!doctype html>
 <html>
@@ -23,7 +23,7 @@ $(function() {
 
      	
 
-		$("#displayname").val('<?php echo $_SESSION['user']['displayname']?>');
+		$("#displayname").val('<?=$_SESSION['user']['displayname']?>');
 
 		$("#button_update").button();
 
@@ -80,16 +80,16 @@ $(function() {
 
 <body>
 	<div id="topest"></div>
-     <?php include '../nav-bar.php';?>
+     <?php require_once '../nav-bar.php';?>
 	<div id="div_container">
-		<?php include '../header.php';?>
+		<?php require_once '../header.php';?>
 		<div id="div_main">
 			<div id="div_sider" class="global-a">
-				<?php include '../siderbar-manage.php';?>
+				<?php require_once '../siderbar-manage.php';?>
 			</div>
 			<div id="div_content" class="global-a">
 				<div class="manage-content-style">
-					<form id="profile_update" action="/pblog/action/douser.php"
+					<form id="profile_update" action="/pblog/action/user.php"
 						method="post">
 						<input type="hidden" name="action" value="profile_update" />
 						<table>
@@ -97,19 +97,19 @@ $(function() {
 								<td class="input-label" style="width: 100px"><span>姓</span></td>
 								<td><input type="text" class="input-text" style="width: 400px;"
 									id="lastname" name="lastname-unchange"
-									value="<?php echo isset($_SESSION["user_profile"]['lastname'])?$_SESSION["user_profile"]['lastname']:""  ?>" /></td>
+									value="<?=isset($_SESSION["user_profile"]['lastname'])?$_SESSION["user_profile"]['lastname']:""  ?>" /></td>
 							</tr>
 							<tr>
 								<td class="input-label" style="width: 100px"><span>名</span></td>
 								<td><input type="text" class="input-text" style="width: 400px;"
 									id="firstname" name="firstname-unchange"
-									value="<?php echo isset($_SESSION["user_profile"]['firstname'])?$_SESSION["user_profile"]['firstname']:""  ?>" /></td>
+									value="<?=isset($_SESSION["user_profile"]['firstname'])?$_SESSION["user_profile"]['firstname']:""  ?>" /></td>
 							</tr>
 							<tr>
 								<td class="input-label" style="width: 100px"><span>昵称</span></td>
 								<td><input type="text" class="input-text" style="width: 400px;"
 									id="nicename" name="nicename-unchange"
-									value="<?php echo isset($_SESSION["user_profile"]['nicename'])?$_SESSION["user_profile"]['nicename']:""  ?>" /></td>
+									value="<?=isset($_SESSION["user_profile"]['nicename'])?$_SESSION["user_profile"]['nicename']:""  ?>" /></td>
 							</tr>
 							<tr>
 								<td class="input-label" style="width: 100px"><span>显示名</span></td>
@@ -145,13 +145,13 @@ $(function() {
 								<td class="input-label" style="width: 100px"><span>邮箱</span></td>
 								<td><input type="text" class="input-text" style="width: 400px;"
 									id="email" name="email-unchange"
-									value="<?php echo isset($_SESSION["user_profile"]['email'])?$_SESSION["user_profile"]['email']:""  ?>" /></td>
+									value="<?=isset($_SESSION["user_profile"]['email'])?$_SESSION["user_profile"]['email']:""  ?>" /></td>
 							</tr>
 							<tr>
 								<td class="input-label" style="width: 100px"><span>电话</span></td>
 								<td><input type="text" class="input-text" style="width: 400px;"
 									id="tel" name="tel-unchange"
-									value="<?php echo isset($_SESSION["user_profile"]['tel'])?$_SESSION["user_profile"]['tel']:""  ?>" /></td>
+									value="<?=isset($_SESSION["user_profile"]['tel'])?$_SESSION["user_profile"]['tel']:""  ?>" /></td>
 							</tr>
 							<tr>
 								<td colspan="2"><input type="button" style="width: 103px;"

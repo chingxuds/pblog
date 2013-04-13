@@ -27,7 +27,7 @@
 	<h4 id="post-man-h">文章管理</h4>
 	<div id="post-man-d">
 		<ul>
-			<li><a href="/pblog/page/edit.php">撰写新文章</a></li>
+			<li><a href="/pblog/manage/post-new.php">撰写新文章</a></li>
 			<li><a href="#">已发表文章</a></li>
 			<li><a href="#">草稿箱</a></li>
 			<?php
@@ -56,12 +56,12 @@
 	<div id="type-man-d">
 		<ul>
 			<li><a href="/pblog/manage/category.php">分类管理</a></li>
-			<li><a href="/pblog/manage/category.php">标签管理</a></li>
+<!-- 			<li><a href="/pblog/manage/category.php">标签管理</a></li> -->
 			<?php
 				if (! $_SESSION ['user'] ['status']) {
 			?>
 			<li><a href="#">类别列表</a></li>
-			<li><a href="#">标签列表</a></li>
+<!-- 			<li><a href="#">标签列表</a></li> -->
 			<?php 
 				}
 			?>
