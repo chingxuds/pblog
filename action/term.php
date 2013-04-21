@@ -28,6 +28,7 @@ switch ($action) {
  * Ajax 分类添加函数
  */
 function ajax_cat_add() {
+	$link = creatLink();
 	$tbl_name = "pb_terms";
 	
 	$name = get_parameter_once ( 'cat_name' );
@@ -37,16 +38,16 @@ function ajax_cat_add() {
 	$select_items = "term_id";
 	$where = "WHERE term_name='$name' AND parent='$parent' AND taxonomy='category'";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	if (! $arr ['term_id']) {
 		$set = "term_name='$name',term_slug='$slug',taxonomy='category',parent='$parent'";
 		$sql = create_insert_string ( $tbl_name, $set );
-		if (doQuery ( $sql )) {
+		if (doQuery ( $link, $sql )) {
 			$select_items = "term_id";
 			$where = "WHERE term_name='$name' AND parent='$parent' AND taxonomy='category'";
 			$sql = create_select_string ( $select_items, $tbl_name, $where );
-			$result = doQuery ( $sql );
+			$result = doQuery ( $link, $sql );
 			$arr = mysqli_fetch_assoc ( $result );
 			
 			$jsn_arr ['id'] = $arr ['term_id'];
@@ -62,12 +63,14 @@ function ajax_cat_add() {
 	} else {
 		echo FALSE;
 	}
+	closeLink($link);
 }
 
 /**
  * 标签更新函数
  */
 function tags_update() {
+	$link = creatLink();
 	$tbl_name = "pb_terms";
 	$id = get_parameter_once ( 'tag_id' );
 	$name = get_parameter_once ( 'tag_name' );
@@ -97,12 +100,14 @@ function tags_update() {
 		$where = "WHERE term_id='$id'";
 		$sql = create_update_string ( $tbl_name, $set, $where );
 	}
+	closeLink($link);
 }
 
 /**
  * 用于Ajax的标签更新函数
  */
 function ajax_tag_update() {
+	$link = creatLink();
 	$name = get_parameter_once ( 'tag_name' );
 	$slug = get_parameter_once ( 'tag_slug' );
 	$description = get_parameter_once ( 'tag_description' );
@@ -121,13 +126,13 @@ function ajax_tag_update() {
 	$select_items = "term_id,count";
 	$where = "WHERE term_name='$name' AND taxonomy='$taxonomy'";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	$id = $arr ['term_id'];
 	if (! $id) {
 		$set = "term_name='$name',term_slug='$slug',taxonomy='$taxonomy',description='$description',parent='$parent',count='$count'";
 		$sql = create_insert_string ( $tbl_name, $set );
-		if (doQuery ( $sql )) {
+		if (doQuery ( $link, $sql )) {
 			echo TRUE;
 		} else {
 			echo FALSE;
@@ -137,18 +142,20 @@ function ajax_tag_update() {
 		$set = "count='$count'";
 		$where = "term_id='$id'";
 		$sql = create_update_string ( $tbl_name, $set, $where );
-		if (doQuery ( $sql )) {
+		if (doQuery ( $link, $sql )) {
 			echo TRUE;
 		} else {
 			echo FALSE;
 		}
 	}
+	closeLink($link);
 }
 
 /**
  * Ajax 标签添加函数
  */
 function ajax_tag_add() {
+	$link = creatLink();
 	$name = get_parameter_once ( 'tag_name' );
 	$slug = code_short ( $name, 'ta' );
 	$description = '';
@@ -160,16 +167,16 @@ function ajax_tag_add() {
 	$select_items = "term_id";
 	$where = "WHERE term_name='$name' AND taxonomy='$taxonomy'";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	$id = $arr ['term_id'];
 	$jsn_arr ['name'] = $name;
 	if (! $id) {
 		$set = "term_name='$name',term_slug='$slug',taxonomy='$taxonomy',description='$description',parent='$parent',count='$count'";
 		$sql = create_insert_string ( $tbl_name, $set );
-		if (doQuery ( $sql )) {
+		if (doQuery ( $link, $sql )) {
 			$sql = create_select_string ( $select_items, $tbl_name, $where );
-			$result = doQuery ( $sql );
+			$result = doQuery ( $link, $sql );
 			$arr = mysqli_fetch_assoc ( $result );
 			$jsn_arr ['id'] = $arr ['term_id'];
 			$jsn = json_encode ( $jsn_arr );
@@ -182,17 +189,19 @@ function ajax_tag_add() {
 		$jsn = json_encode ( $jsn_arr );
 		echo $jsn;
 	}
+	closeLink($link);
 }
 
 /**
  * Ajax 查看热门标签函数
  */
 function ajax_tag_common() {
+	$link = creatLink();
 	$tbl_name = "pb_terms";
 	$select_items = "term_id,term_name";
 	$where = "WHERE taxonomy='tag' ORDER BY count DESC LIMIT 10";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	$int = 0;
 	while ( $arr ) {
@@ -204,6 +213,7 @@ function ajax_tag_common() {
 	}
 	$jsn = json_encode ( $jsn_arr );
 	echo $jsn;
+	closeLink($link);
 }
 
 /**
@@ -211,11 +221,12 @@ function ajax_tag_common() {
  * @return Array 分类数组
  */
 function get_all_cats() {
+	$link = creatLink();
 	$tbl_name = "pb_terms";
 	$select_items = "term_id,term_name,term_slug,parent,count";
 	$where = "WHERE taxonomy = 'category'";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	while ( $arr ) {
 		$at ['id'] = $arr ['term_id'];
@@ -230,7 +241,7 @@ function get_all_cats() {
 	}
 	
 // 	echo '<pre>' . var_dump($app_arr) . '</pre>';
-	
+	closeLink($link);
 	return $app_arr;
 }
 

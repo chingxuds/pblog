@@ -98,6 +98,15 @@ table {
 	color: #BBBBBB;
 }
 
+.comment-style {
+	border-style: dashed;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+	border-top-color: #444444;
+	border-top-width: thin;
+}
+
 /** 全局样式 结束 **/
 
 /** 工具栏样式 开始 **/
@@ -365,7 +374,7 @@ table {
 	font-size: 18px;
 }
 
-.add-tags-list{
+.add-tags-list {
 	color: rgb(0, 115, 234);
 	margin: 10px;
 }
@@ -386,7 +395,6 @@ table {
 	padding: 0;
 }
 
-
 /** 内容区样式 结束 **/
 
 /** 前台页面总体样式 结束 **/
@@ -394,36 +402,81 @@ table {
 /** 页码样式 开始 **/
 
 div.pagination {
-	padding: 3px;
-	margin: 3px;
+	width: 100%;
+	padding: 0px;
+	margin-top: 10px;
+	margin-right:-9px;
+	font-size: 12px;
+	text-align: center;
+	float: right;
 }
 
-div.pagination a {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-	border: 1px solid #AAAADD;
-	text-decoration: none; /* no underline */
-	color: #000099;
+div.pagination ul {
+	list-style-type: none;
+	list-style-image: none;
+	list-style-position: outside;
+	text-align: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
-div.pagination a:hover, div.pagination a:active {
-	border: 1px solid #000099;
-	color: #000;
+div.pagination ul li {
+	text-align: center;
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.pagination ul li a {
+	padding: 0;
+	margin: 0;
+}
+
+div.pagination span {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	/*overflow-style: marquee-line;*/
 }
 
 div.pagination span.current {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-	border: 1px solid #000099;
+	padding: 0;
+	margin: 0;
 	font-weight: bold;
-	background-color: #000099;
-	color: #FFF;
+	/*background-color: rgb(0, 115, 234);*/
+	color: rgb(255, 0, 132);
 }
 
-div.pagination span.disabled {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-	border: 1px solid #EEE;
-	color: #DDD;
-}
+/*div.pagination span.disabled {
+	padding: 0px;
+	margin: 3px;
+	color: #CCCCCC;
+}*/
+
+/*div.pagination a {
+ padding: 2px 5px 2px 5px;
+ margin: 2px;
+ border: 1px solid #AAAADD;
+ }
+
+ /*div.pagination a:hover, div.pagination a:active {
+ border: 1px solid #000099;
+ color: #000;
+ }*/
+
+/*div.pagination span.current {
+ padding: 2px 5px 2px 5px;
+ margin: 2px;
+ border: 1px solid rgb(0, 115, 234);
+ font-weight: bold;
+ background-color: rgb(0, 115, 234);
+ color: #FFF;
+ }
+
+ div.pagination span.disabled {
+ padding: 2px 5px 2px 5px;
+ margin: 2px;
+ border: 1px solid #CCCCCC;
+ color: #CCCCCC;
+ }*/
 /** 页码样式 结束 **/

@@ -9,23 +9,30 @@ require_once 'action/initialize.php';
 <title>首页</title>
 <link href="/pblog/includes/jquery/jquery-ui.min.css" rel="stylesheet"
 	type="text/css">
-<link href="/pblog/includes/css/common.css" rel="stylesheet" type="text/css">
+<link href="/pblog/includes/css/common.css" rel="stylesheet"
+	type="text/css">
 <script src="/pblog/includes/jquery/jquery.min.js"></script>
 <script src="/pblog/includes/jquery/jquery-ui.min.js"></script>
 <script src="/pblog/includes/js/common.js"></script>
 <script type="text/javascript">
-$(function() {
-});
+	$(function() {
+	});
         </script>
 </head>
 
 <body>
 	<div id="topest"></div>
-     <?php require_once 'nav-bar.php';?>
+     <?php
+        require_once 'nav-bar.php';
+    ?>
 	<div id="div_container">
-		<?php require_once 'header.php';?>
+		<?php
+        require_once 'header.php';
+    ?>
 		<div id="div_main">
-			<?php require_once 'siderbar-list.php';?>
+			<?php
+            require_once 'siderbar-list.php';
+        ?>
 			<div id="div_content">
 				<?php
 				$posts_latest = application ( 'posts_latest' );
@@ -42,8 +49,7 @@ $(function() {
 							</h2>
 							<span class="article-author"><a
 								href="http://localhost/wordpress/?author=<?=$post['author']['id'] ?>"
-								title="查看所有由 <?=$post['author']['name'] ?> 发布的文章"
-								rel="author"><?=$post['author']['name'] ?></a></span><span>&nbsp;@&nbsp;</span>
+								title="查看所有由 <?=$post['author']['name'] ?> 发布的文章" rel="author"><?=$post['author']['name'] ?></a></span><span>&nbsp;@&nbsp;</span>
 							<span class="article-other"><a href="#" title="下午 1:17"
 								rel="bookmark"> <time datetime="2013-03-29t13:17:50+00:00"><?=$post['date'] ?></time>
 							</a></span>
@@ -53,23 +59,29 @@ $(function() {
 						</div>
 						<footer>
 							<span class="article-other"><a
-								href="http://localhost/wordpress/?cat=<?=$categories[$post['category']]['id'] ?>"
-								title="查看 <?=$categories[$post['category']]['name'] ?> 中的全部文章"
-								rel="category">#<?=$categories[$post['category']]['name']?></a></span>
-							<br /> <span class="article-other"> <a href="#"
-								title="《测试文章一》上的评论"><span>发表回复</span></a>
+								href="/pblog/action/search.php?action=category_view&cat=<?=$post['category'] ? $categories[$post['category']]['id'] : 0 ?>"
+								title="查看 <?=$post['category'] ? $categories[$post['category']]['name'] : "未分类" ?> 中的全部文章"
+								rel="category">#<?=$post['category'] ? $categories[$post['category']]['name'] : "未分类" ?></a></span>
+							<br /> <span class="article-other"> <a href="<?=$post['url'] ?>"
+								title="《测试文章一》上的评论"> <span><?=$post['comment_num'] ? $post['comment_num'] . "&nbsp;条回复" : "发表回复" ?>
+								</span>
+							</a>
 							</span>
 						</footer>
 					</article>
 				</div>			
 				<?php
-					}
-				}
+                }
+                }
 				?>
-				<footer class="global-a" style="float: right; margin-right:10px;"><a href="#">查看全部 >></a></footer>
+				<footer class="global-a" style="float: right; margin-right: 10px;">
+					<a href="/pblog/action/search.php?action=post">查看全部 >></a>
+				</footer>
 			</div>
 		</div>
 	</div>
-	<?php include_once 'footer.php'; ?>
+	<?php
+        include_once 'footer.php';
+ ?>
 </body>
 </html>

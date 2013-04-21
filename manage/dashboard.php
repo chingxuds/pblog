@@ -6,7 +6,7 @@ require_once '../action/inc/protect.php';
 <html>
     <head>
         <meta charset="utf-8">
-        <title>分类管理</title>
+        <title>仪表盘</title>
         <link href="/pblog/includes/jquery/jquery-ui.min.css" rel="stylesheet"
         type="text/css">
         <link href="/pblog/includes/css/common.css" rel="stylesheet"
@@ -16,9 +16,7 @@ require_once '../action/inc/protect.php';
         <script src="/pblog/includes/js/common.js"></script>
         <script>
 			$(function() {
-				$("#list").accordion({
-					active : 4
-				});
+				$("#list").accordion();
 			});
         </script>
     </head>

@@ -15,4 +15,30 @@ $( "#button_search" ).button();
 
 $("#nav_menu_ul").buttonset();
 
+$("#email_complete").focus(function(){
+				$(this).keypress(function(event){
+// 					var reg = /^@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+					var email_title = $(this).val();
+					if(email_title.match(/@[^]*$/,email_title)){
+						email_title = email_title.replace(/@[^]*$/,"");
+						var email_tags= [
+			         			email_title+"@gmail.com",
+			         			email_title+"@qq.com",
+			         			email_title+"@sina.com",
+			         			email_title+"@163.com",
+			         			email_title+"@126.com",
+			         			email_title+"@yeah.net",
+			         			email_title+"@yahoo.com",
+			         			email_title+"@live.cn",
+			         			email_title+"@live.com",
+			         			email_title+"@hotmail.com",
+			         			email_title+"@icloud.com"
+			         			];
+						$("#email_complete").autocomplete({
+				    		source: email_tags
+						});
+					}
+				});
+			});
+
 });

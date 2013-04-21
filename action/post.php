@@ -21,6 +21,7 @@ switch ($action) {
  * 文章发布函数
  */
 function publish() {
+	$link = creatLink();
 	/**
 	 * 获取传入数据
 	 */
@@ -54,14 +55,14 @@ function publish() {
 	$tbl_name_term = 'pb_terms';
 	$set = "post_author='$author',post_category='$category',post_date='$post_date',post_date_gmt='$post_date_gmt',post_content='$content',post_title='$title',post_excerpt='$excerpt',post_name='$name',post_modified='$modified_date',post_modified_gmt='$modified_date_gmt',post_type='post',post_status='$status',comment_status='$status'";
 	$sql = create_insert_string ( $tbl_name_post, $set );
-	if (! doQuery ( $sql )) {
+	if (! doQuery ( $link, $sql )) {
 		echo "插入失败";
 	}
 	
 	$select_items = "post_id";
 	$where = "WHERE post_author='$author' AND post_date_gmt='$post_date_gmt'";
 	$sql = create_select_string ( $select_items, $tbl_name_post, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	$post_id = $arr ['post_id'];
 	
@@ -69,18 +70,26 @@ function publish() {
 	$set = "post_url='$url'";
 	$where = "WHERE post_id='$post_id'";
 	$sql = create_update_string ( $tbl_name_post, $set, $where );
-	doQuery ( $sql );
+	doQuery ( $link, $sql );
 	
 	$select_items = 'count';
 	$where = "WHERE term_id='$category'";
 	$sql = create_select_string ( $select_items, $tbl_name_term, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	$cat_count = $arr ['count'];
 	$cat_count ++;
 	$set = "count='$cat_count'";
 	$sql = create_update_string ( $tbl_name_term, $set, $where );
-	doQuery ( $sql );
+	doQuery ( $link, $sql );
+	
+// 	meta_update('post', $post_id, "category", $category);
+	
+	update_cats_in_app();
+	update_posts_archives();
+	update_posts_latest_in_app();
+	closeLink($link);
+	header ( 'Location: /pblog/page/?id='.$post_id );
 }
 
 ?>

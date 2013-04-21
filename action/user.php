@@ -4,7 +4,7 @@ require_once 'inc/dateformat.php';
 require_once 'inc/db.php';
 require_once 'inc/session.php';
 require_once 'other.php';
-require_once 'inc/protect.php';
+// require_once 'inc/protect.php';
 
 // ** 根据动作参数调用不同函数 ** //
 $action = get_parameter_once ( 'action' );
@@ -21,6 +21,12 @@ switch ($action) {
 	case 'profile_update' :
 		profile_update ();
 		break;
+	case 'ajax_login' :
+		ajax_login ();
+		break;
+	case 'ajax_check_username' :
+		ajax_check_username ();
+		break;
 	
 	default :
 		break;
@@ -30,33 +36,34 @@ switch ($action) {
  * 登录函数
  */
 function login() {
+	$link = creatLink ();
 	// ** 获取前台传入数据 ** //
 	$username = get_parameter_once ( 'username_input' );
 	$userpass = code_md5 ( get_parameter_once ( 'userpass_input' ) );
 	
 	// ** 查询数据库验证信息 ** //
-	$select_items = "user_id,user_displayname,user_status";
+	$select_items = "user_id,user_displayname,user_email,user_status";
 	$where = "WHERE user_pass='$userpass' AND user_login='$username'";
 	$sql = create_select_string ( $select_items, "pb_users", $where );
-	$result = doQuery ( $sql );
-	if ($result === FALSE) {
-		echo "查询失败";
-	} else {
+	$result = doQuery ( $link, $sql );
+	$arr = mysqli_fetch_assoc ( $result );
+	if ($arr) {
 		$_SESSION ["isLogin"] = TRUE;
-		$arr = mysqli_fetch_assoc ( $result );
 		$user ["id"] = $arr ["user_id"];
-		$user ["nicename"] = $arr ["user_nicename"];
+		$user ["email"] = $arr ["user_email"];
 		$user ["displayname"] = $arr ["user_displayname"];
 		$user ["status"] = $arr ["user_status"];
 		$_SESSION ["user"] = $user;
-		header ( 'Location:' . $_SERVER ["HTTP_REFERER"] );
 	}
+	closeLink ( $link );
+	header ( 'Location:' . $_SERVER ["HTTP_REFERER"] );
 }
 
 /**
  * 登出函数
  */
 function logout() {
+	$link = creatLink ();
 	$_SESSION ["isLogin"] = FALSE;
 	if (isset ( $_SESSION ["user"] ))
 		unset ( $_SESSION ["user"] );
@@ -69,6 +76,7 @@ function logout() {
  * 注册函数
  */
 function register() {
+	$link = creatLink ();
 	// ** 获取前台传入数据 ** //
 	$username = get_parameter_once ( 'username_input' );
 	$userpass = code_md5 ( get_parameter_once ( 'userpass_input' ) );
@@ -80,10 +88,24 @@ function register() {
 	$status = 0;
 	
 	// ** 把数据加入到数据库中以完成注册 ** //
-	$set = "user_login='$username',user_pass='$userpass',user_nicename='$nicename',user_displayname='$displayname',user_email='$useremail',user_registered='$register_time',user_registered_gmt='$register_time_gmt',user_status='$register_time_gmt','$status'";
+	$set = "user_login='$username',user_pass='$userpass',user_nicename='$nicename',user_displayname='$displayname',user_email='$useremail',user_registered='$register_time',user_registered_gmt='$register_time_gmt',user_status='$status'";
 	$sql = create_insert_string ( "pb_users", $set );
-	doQuery ( $sql );
+	doQuery ( $link, $sql );
 	
+	$select_items = "user_id,user_displayname,user_email,user_status";
+	$where = "WHERE user_pass='$userpass' AND user_login='$username'";
+	$sql = create_select_string ( $select_items, "pb_users", $where );
+	$result = doQuery ( $link, $sql );
+	$arr = mysqli_fetch_assoc ( $result );
+	if ($arr) {
+		$_SESSION ["isLogin"] = TRUE;
+		$user ["id"] = $arr ["user_id"];
+		$user ["email"] = $arr ["user_email"];
+		$user ["displayname"] = $arr ["user_displayname"];
+		$user ["status"] = $arr ["user_status"];
+		$_SESSION ["user"] = $user;
+	}
+	closeLink ( $link );
 	header ( 'Location:' . $_SERVER ["HTTP_REFERER"] );
 }
 
@@ -91,6 +113,7 @@ function register() {
  * 个人资料更新函数
  */
 function profile_update() {
+	$link = creatLink ();
 	$object_type = "user";
 	$object_id = $_SESSION ['user'] ['id'];
 	
@@ -118,23 +141,65 @@ function profile_update() {
 	if ($displayname) {
 		$set = "user_displayname='$displayname'";
 		$sql = create_update_string ( "pb_users", $set, $where );
-		doQuery ( $sql );
+		doQuery ( $link, $sql );
 		$_SESSION ['user'] ['displayname'] = $displayname;
 	}
 	if ($nicename) {
 		$set = "user_nicename='$nicename'";
 		$sql = create_update_string ( "pb_users", $set, $where );
-		doQuery ( $sql );
+		doQuery ( $link, $sql );
 		$_SESSION ['user_profile'] ['nicename'] = $nicename;
 	}
 	if ($email) {
 		$set = "user_email='$email'";
 		$sql = create_update_string ( "pb_users", $set, $where );
-		doQuery ( $sql );
+		doQuery ( $link, $sql );
 		$_SESSION ['user_profile'] ['email'] = $email;
 	}
-	
+	closeLink ( $link );
 	header ( 'Location:' . $_SERVER ["HTTP_REFERER"] );
 }
 
+/**
+ * Ajax登录检查
+ */
+function ajax_login() {
+	$link = creatLink ();
+	// ** 获取前台传入数据 ** //
+	$username = get_parameter_once ( 'username' );
+	$userpass = code_md5 ( get_parameter_once ( 'userpass' ) );
+	
+	// ** 查询数据库验证信息 ** //
+	$select_items = "user_id";
+	$where = "WHERE user_pass='$userpass' AND user_login='$username'";
+	$sql = create_select_string ( $select_items, "pb_users", $where );
+	$result = doQuery ( $link, $sql );
+	$arr = mysqli_fetch_assoc ( $result );
+	if ($arr) {
+		echo TRUE;
+	} else {
+		echo FALSE;
+	}
+	closeLink ( $link );
+}
+
+/**Ajax检查用户名*/
+function ajax_check_username() {
+	$link = creatLink ();
+	// ** 获取前台传入数据 ** //
+	$username = get_parameter_once ( 'username' );
+	
+	// ** 查询数据库验证信息 ** //
+	$select_items = "user_id";
+	$where = "WHERE user_login='$username'";
+	$sql = create_select_string ( $select_items, "pb_users", $where );
+	$result = doQuery ( $link, $sql );
+	$arr = mysqli_fetch_assoc ( $result );
+	if ($arr) {
+		echo TRUE;
+	} else {
+		echo FALSE;
+	}
+	closeLink ( $link );
+}
 ?>

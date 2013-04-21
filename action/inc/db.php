@@ -1,19 +1,29 @@
 <?php
 // ** MySQL 配置 ** //
-/** PBlog 数据库的名称 */
-define('DB_NAME', 'pblog');
+/**
+ * PBlog 数据库的名称
+ */
+define ( 'DB_NAME', 'pblog' );
 
-/** MySQL 数据库用户名 */
-define('DB_USER', 'root');
+/**
+ * MySQL 数据库用户名
+ */
+define ( 'DB_USER', 'root' );
 
-/** MySQL 数据库密码 */
-define('DB_PASSWORD', 'root');
+/**
+ * MySQL 数据库密码
+ */
+define ( 'DB_PASSWORD', 'root' );
 
-/** MySQL 主机 */
-define('DB_HOST', 'localhost');
+/**
+ * MySQL 主机
+ */
+define ( 'DB_HOST', 'localhost' );
 
-/** 创建数据表时默认的文字编码 */
-define('DB_CHARSET', 'utf8');
+/**
+ * 创建数据表时默认的文字编码
+ */
+define ( 'DB_CHARSET', 'utf8' );
 
 // ** MySQL 连接 ** //
 /**
@@ -33,7 +43,8 @@ function creatLink() {
 /**
  * 关闭连接函数
  *
- * @param $link 连接标识符        	
+ * @param object $link
+ *        	连接标识符
  */
 function closeLink($link) {
 	if ($link) {
@@ -46,16 +57,16 @@ function closeLink($link) {
 /**
  * 发送SQL语句函数,成功则返回结果集$result,失败则返回FALSE
  *
+ * @param object $link
+ *        	连接标识符
  * @param string $sql
  *        	SQL语句
  * @return Ambigous <boolean, object> 成功返回result对象或TRUE，失败返回FALSE
  */
-function doQuery($sql) {
+function doQuery($link, $sql) {
 	if ($sql != '') {
-		$link = creatLink ();
 		mysqli_set_charset ( $link, 'utf8' );
-		$result = mysqli_query ( $link, $sql ) or die($sql . '<br>' . mysqli_error($link));
-		closeLink ( $link );
+		$result = mysqli_query ( $link, $sql ) or die ( $sql . '<br>' . mysqli_error ( $link ) );
 		return $result;
 	} else {
 		return FALSE;
@@ -124,7 +135,7 @@ function find_parent_count($tbl_name, $col_name, $id_name, $parent_id) {
 	} else {
 		$where = "WHERE $id_name='$parent_id'";
 		$sql = create_select_string ( $col_name, $tbl_name, $where );
-		$arr = mysqli_fetch_assoc ( doQuery ( $sql ) );
+		$arr = mysqli_fetch_assoc ( doQuery ( $link, $sql ) );
 		
 		return find_parent_count ( $tbl_name, $col_name, $id_name, $arr [$col_name] ) + 1;
 	}

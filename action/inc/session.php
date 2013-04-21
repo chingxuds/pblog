@@ -37,11 +37,11 @@ function application($key = FALSE, $value = FALSE) {
 	session_start (); // 开启全局session
 	if ($value) 	// 如果有第二个参数，那么表示写入全局session
 	{
-		echo '<script>alert("' . var_dump ( $value ) . '")</script>';
+// 		echo '<script>alert("' . var_dump ( $value ) . '")</script>';
 		$re = ($_SESSION [$key] = $value);
 	} else 	// 如果只有一个参数，那么返回该参数对应的value
 	{
-		echo '<script>alert("取值")</script>';
+// 		echo '<script>alert("取值")</script>';
 		if (isset ( $_SESSION [$key] )) {
 			$re = $_SESSION [$key];
 		} else {
@@ -60,12 +60,12 @@ function application($key = FALSE, $value = FALSE) {
 /**
  * 更新全局变量中的类别
  */
-function update_cats_in_app() {
+function update_cats_in_app($link) {
 	$tbl_name = "pb_terms";
 	$select_items = "term_id,term_name,term_slug,parent,count";
 	$where = "WHERE taxonomy = 'category'";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	while ( $arr ) {
 		$at ['id'] = $arr ['term_id'];
@@ -85,12 +85,12 @@ function update_cats_in_app() {
 /**
  * 更新全局变量中的最新文章
  */
-function update_posts_latest_in_app() {
+function update_posts_latest_in_app($link) {
 	$tbl_name = "pb_posts";
-	$select_items = "post_id,post_author,post_category,post_title,post_excerpt,post_url,post_modified,comment_count";
+	$select_items = "post_id,post_author,post_category,post_title,post_excerpt,post_url,DATE_FORMAT(post_modified,'%Y年%m月%d日 %H:%i') AS date,comment_count";
 	$where = "WHERE post_type='post' AND post_status = '0' ORDER BY post_modified_gmt DESC LIMIT 0, 10";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	
 	$arr = mysqli_fetch_assoc ( $result );
 	$anonymous ['id'] = 0;
@@ -103,7 +103,7 @@ function update_posts_latest_in_app() {
 		$at ['title'] = $arr ['post_title'];
 		$at ['excerpt'] = preg_replace ( "/&##&/", "'", $arr ['post_excerpt'] );
 		$at ['url'] = $arr ['post_url'];
-		$at ['date'] = $arr ['post_modified'];
+		$at ['date'] = $arr ['date'];
 		$at ['comment_num'] = $arr ['comment_count'];
 		
 		if (! isset ( $aa [$arr ['post_author']] )) {
@@ -111,7 +111,7 @@ function update_posts_latest_in_app() {
 			$select_items = "user_displayname";
 			$where = "WHERE user_id=" . $author ["id"];
 			$sql = create_select_string ( $select_items, 'pb_users', $where );
-			$ur = doQuery ( $sql );
+			$ur = doQuery ( $link, $sql );
 			$u = mysqli_fetch_assoc ( $ur );
 			$author ['name'] = $u ['user_displayname'];
 			$at ['author'] = $author;
@@ -130,9 +130,9 @@ function update_posts_latest_in_app() {
 /**
  * 更新按日期归档文章数函数
  */
-function update_posts_archives() {
+function update_posts_archives($link) {
 	$sql = "SELECT DATE_FORMAT(post_modified_gmt,'%Y年%m月') AS date,DATE_FORMAT(post_modified_gmt,'%Y') AS year,DATE_FORMAT(post_modified_gmt,'%m') AS month, COUNT(*) AS number FROM pb_posts WHERE post_type='post' GROUP BY DATE_FORMAT(post_modified_gmt,'%Y年%m月') ORDER BY post_id DESC";
-	$result = doQuery ( $sql );
+	$result = doQuery ( $link, $sql );
 	$arr = mysqli_fetch_assoc ( $result );
 	
 	$i = 1;
