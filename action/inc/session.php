@@ -88,7 +88,7 @@ function update_cats_in_app($link) {
 function update_posts_latest_in_app($link) {
 	$tbl_name = "pb_posts";
 	$select_items = "post_id,post_author,post_category,post_title,post_excerpt,post_url,DATE_FORMAT(post_modified,'%Y年%m月%d日 %H:%i') AS date,comment_count";
-	$where = "WHERE post_type='post' AND post_status = '0' ORDER BY post_modified_gmt DESC LIMIT 0, 10";
+	$where = "WHERE post_type='post' AND post_status=0 ORDER BY post_modified_gmt DESC LIMIT 0, 10";
 	$sql = create_select_string ( $select_items, $tbl_name, $where );
 	$result = doQuery ( $link, $sql );
 	

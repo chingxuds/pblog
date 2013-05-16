@@ -8,13 +8,13 @@
     <div id="quick-man-d">
         <ul>
             <li>
-                <a href="/pblog/dashboard.php">查看数据</a>
+                <a href="/pblog/manage/dashboard.php">仪表盘</a>
             </li>
             <li>
-                <a href="/pblog/page/edit.php">撰写文章</a>
+                <a href="/pblog/manage/post-new.php">撰写文章</a>
             </li>
             <li>
-                <a href="#">审核评论</a>
+                <a href="/pblog/manage/?action=comment_unapproved_view">审核评论</a>
             </li>
         </ul>
     </div>
@@ -28,7 +28,7 @@
 if (! $_SESSION ['user'] ['status']) {
             ?>
             <li>
-                <a href="#">用户列表</a>
+                <a href="/pblog/action/user.php?action=check_all_users">用户列表</a>
             </li>
             <?php
             }
@@ -42,16 +42,13 @@ if (! $_SESSION ['user'] ['status']) {
                 <a href="/pblog/manage/post-new.php">撰写新文章</a>
             </li>
             <li>
-                <a href="#">已发表文章</a>
-            </li>
-            <li>
-                <a href="#">草稿箱</a>
+                <a href="/pblog/action/post.php?action=self_posts_overview">已发表文章</a>
             </li>
             <?php
 if (! $_SESSION ['user'] ['status']) {
             ?>
             <li>
-                <a href="#">文章列表</a>
+                <a href="/pblog/action/post.php?action=all_posts_overview">全部文章列表</a>
             </li>
             <?php
             }
@@ -62,13 +59,13 @@ if (! $_SESSION ['user'] ['status']) {
     <div id="com-man-d">
         <ul>
             <li>
-                <a href="#">待审核评论</a>
+                <a href="/pblog/manage/?action=comment_unapproved_view">审核评论</a>
             </li>
             <?php
 if (! $_SESSION ['user'] ['status']) {
             ?>
             <li>
-                <a href="#">评论列表</a>
+                <a href="/pblog/action/comment.php?action=check_all_comments">评论列表</a>
             </li>
             <?php
             }
@@ -79,19 +76,8 @@ if (! $_SESSION ['user'] ['status']) {
     <div id="type-man-d">
         <ul>
             <li>
-                <a href="/pblog/manage/category.php">分类管理</a>
+                <a href="/pblog/action/term.php?action=check_all_cats">分类管理</a>
             </li>
-            <!-- 			<li><a href="/pblog/manage/category.php">标签管理</a></li> -->
-            <?php
-if (! $_SESSION ['user'] ['status']) {
-            ?>
-            <li>
-                <a href="#">类别列表</a>
-            </li>
-            <!-- 			<li><a href="#">标签列表</a></li> -->
-            <?php
-            }
-            ?>
         </ul>
     </div>
 </div>

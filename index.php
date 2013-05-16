@@ -48,11 +48,10 @@ require_once 'action/initialize.php';
 									title="链向 <?=$post['title'] ?> 的固定链接" rel="bookmark"><?=$post['title'] ?></a>
 							</h2>
 							<span class="article-author"><a
-								href="http://localhost/wordpress/?author=<?=$post['author']['id'] ?>"
+								href="/pblog/action/search.php?action=author&author=<?=$post['author']['id'] ?>"
 								title="查看所有由 <?=$post['author']['name'] ?> 发布的文章" rel="author"><?=$post['author']['name'] ?></a></span><span>&nbsp;@&nbsp;</span>
-							<span class="article-other"><a href="#" title="下午 1:17"
-								rel="bookmark"> <time datetime="2013-03-29t13:17:50+00:00"><?=$post['date'] ?></time>
-							</a></span>
+							<span class="article-other"><time datetime="<?=$post['date'] ?>"><?=$post['date'] ?></time>
+							</span>
 						</header>
 						<div>
 							<p><?=$post['excerpt'] ?></p>

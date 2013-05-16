@@ -96,15 +96,13 @@ table {
 
 .input-text-default {
 	color: #BBBBBB;
+	font-style: italic;
 }
 
-.comment-style {
-	border-style: dashed;
-	border-left: none;
-	border-right: none;
-	border-bottom: none;
-	border-top-color: #444444;
-	border-top-width: thin;
+.table-style td {
+	border-bottom-color: #cccccc;
+	border-bottom-style: dashed;
+	border-bottom-width: thin;
 }
 
 /** 全局样式 结束 **/
@@ -241,12 +239,19 @@ table {
 	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
 	overflow: hidden;
 	float: none;
+	background-image: url(../images/header.jpg);
+	background-repeat: repeat-y;
+	border-radius: 15px;
 }
 
 #div_header {
 	float: none;
 	width: 1000px;
 	padding-left: 50px;
+}
+
+#hgroup {
+	color: #FFFFFF;
 }
 
 #div_main {
@@ -268,13 +273,19 @@ table {
 
 #div_sider {
 	float: right;
-	width: 200px;
-	margin-right: 50px;
+	width: 230px;
+	margin-right: 20px;
+	background-color: #FFFFFF;
+	border-radius: 5px;
+	background-image: url(../images/content.jpg);
+	background-repeat: repeat;
+	text-align: center;
+	padding-bottom: 10px;
 }
 
 #div_search {
 	float: none;
-	width: 200px;
+	width: 230px;
 	height: 41px;
 	width: auto;
 	margin: 0;
@@ -295,7 +306,7 @@ table {
 #text_search {
 	float: right;
 	height: 39px;
-	width: 149px;
+	width: 179px;
 	margin: 0;
 	padding: 0;
 	border-color: #DDDDDD;
@@ -331,10 +342,12 @@ table {
 .article-style {
 	background-image: url(../images/content.jpg);
 	background-repeat: repeat;
+	color: #444444;
 	padding: 20px;
 	padding-top: 0;
 	margin: 10px;
 	box-shadow: 0px 3px 6px rgba(70, 70, 70, 1);
+	border-radius: 5px;
 }
 
 .article-author {
@@ -352,6 +365,29 @@ table {
 
 /** 文章样式 结束 **/
 
+/** 评论样式 开始 **/
+
+.comment-style {
+	background-image: url(../images/content.jpg);
+	background-repeat: repeat;
+	color: #444444;
+	padding: 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+#div_comment_post {
+	background-image: url(../images/content.jpg);
+	background-repeat: repeat;
+	color: #444444;
+	border-radius: 5px;
+}
+
+/** 评论样式 结束 **/
+
+/** 撰写新文章样式 开始 **/
 .post-button-style {
 	float: left;
 	height: 41px;
@@ -395,6 +431,8 @@ table {
 	padding: 0;
 }
 
+/** 撰写新文章样式 结束 **/
+
 /** 内容区样式 结束 **/
 
 /** 前台页面总体样式 结束 **/
@@ -405,7 +443,7 @@ div.pagination {
 	width: 100%;
 	padding: 0px;
 	margin-top: 10px;
-	margin-right:-9px;
+	margin-right: -9px;
 	font-size: 12px;
 	text-align: center;
 	float: right;
@@ -447,36 +485,4 @@ div.pagination span.current {
 	color: rgb(255, 0, 132);
 }
 
-/*div.pagination span.disabled {
-	padding: 0px;
-	margin: 3px;
-	color: #CCCCCC;
-}*/
-
-/*div.pagination a {
- padding: 2px 5px 2px 5px;
- margin: 2px;
- border: 1px solid #AAAADD;
- }
-
- /*div.pagination a:hover, div.pagination a:active {
- border: 1px solid #000099;
- color: #000;
- }*/
-
-/*div.pagination span.current {
- padding: 2px 5px 2px 5px;
- margin: 2px;
- border: 1px solid rgb(0, 115, 234);
- font-weight: bold;
- background-color: rgb(0, 115, 234);
- color: #FFF;
- }
-
- div.pagination span.disabled {
- padding: 2px 5px 2px 5px;
- margin: 2px;
- border: 1px solid #CCCCCC;
- color: #CCCCCC;
- }*/
 /** 页码样式 结束 **/

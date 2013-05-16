@@ -31,7 +31,7 @@ define ( 'DB_CHARSET', 'utf8' );
  *
  * @return object 连接标识符
  */
-function creatLink() {
+function createLink() {
 	$link = mysqli_connect ( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
 	if (mysqli_connect_errno ()) {
 		printf ( "Connect failed: %s\n", mysqli_connect_error () );
@@ -129,7 +129,7 @@ function create_update_string($tbl_name, $set, $where = "") {
  *        	父类id的值
  * @return number 父类个数
  */
-function find_parent_count($tbl_name, $col_name, $id_name, $parent_id) {
+function find_parent_count($link, $tbl_name, $col_name, $id_name, $parent_id) {
 	if ($parent_id == 0) {
 		return 0;
 	} else {
@@ -137,7 +137,7 @@ function find_parent_count($tbl_name, $col_name, $id_name, $parent_id) {
 		$sql = create_select_string ( $col_name, $tbl_name, $where );
 		$arr = mysqli_fetch_assoc ( doQuery ( $link, $sql ) );
 		
-		return find_parent_count ( $tbl_name, $col_name, $id_name, $arr [$col_name] ) + 1;
+		return find_parent_count ($link, $tbl_name, $col_name, $id_name, $arr [$col_name] ) + 1;
 	}
 }
 ?>

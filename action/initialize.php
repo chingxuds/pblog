@@ -2,7 +2,7 @@
 require_once 'inc/paginate.php';
 require_once 'inc/session.php';
 
-$link = creatLink ();
+$link = createLink ();
 // if (! application ( 'categories' )) {
 update_cats_in_app ( $link );
 // }

@@ -14,9 +14,6 @@ switch ($action) {
     case 'archive_view' :
         archive_view();
         break;
-    case 'posts_list_page' :
-        posts_list_page();
-        break;
 
     default :
         break;
@@ -26,7 +23,7 @@ switch ($action) {
  * 文章查看函数
  */
 function post_view() {
-    $link = creatLink();
+    $link = createLink();
     $id = get_parameter_once('id');
     // echo "<script>alert($id);</script>";
 
@@ -54,8 +51,8 @@ function post_view() {
         $post['author'] = $author;
 
         $tbl_name = "pb_comments";
-        $select_items = "comment_id,comment_author,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i') AS date,comment_content";
-        $where = "WHERE post_id=$id AND comment_approved='approved'";
+        $select_items = "comment_id,comment_author,comment_author_email,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i') AS date,comment_content,comment_approved,user_id";
+        $where = "WHERE post_id=$id";
         $sql = create_select_string($select_items, $tbl_name, $where);
         $cr = doQuery($link, $sql);
         $c = mysqli_fetch_assoc($cr);
@@ -64,8 +61,11 @@ function post_view() {
             while ($c) {
                 $comment['id'] = $c['comment_id'];
                 $comment['author_name'] = $c['comment_author'];
+                $comment['author_email'] = $c['comment_author_email'];
                 $comment['date'] = $c['date'];
                 $comment['content'] = $c['comment_content'];
+                $comment['approved'] = $c['comment_approved'];
+                $comment['uid'] = $c['user_id'];
 
                 $comments[$i++] = $comment;
                 $c = mysqli_fetch_assoc($cr);
@@ -86,7 +86,7 @@ function post_view() {
  * 归档查看函数
  */
 function archive_view() {
-    $link = creatLink();
+    $link = createLink();
     $year = get_parameter_once('year');
     $month = get_parameter_once('month');
     $month_next = $month + 1;

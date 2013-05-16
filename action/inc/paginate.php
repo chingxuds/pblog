@@ -33,7 +33,7 @@ function get_total_pages($link, $tbl_name, $where = '') {
  *        	当前页码
  * @return Ambigous <boolean, object> 成功返回result对象或TRUE，失败返回FALSE
  */
-function get_querry_result($link, $tbl_name, $select_items, $where = '', $limit = 10, $cur_page = 1) {
+function get_querry_result($link, $tbl_name, $select_items, $where = '', $cur_page = 1, $limit = 10) {
 	/* 设置开始变量 */
 	$start = ($cur_page - 1) * $limit;
 	
@@ -60,7 +60,7 @@ function get_querry_result($link, $tbl_name, $select_items, $where = '', $limit 
  *        	当前页码
  * @return string 页码的HTML代码
  */
-function get_pages_string($target_page, $target_action = '', $total_pages, $limit = 10, $cur_page = 1, $adjacents = 4) {
+function get_pages_string($target_page, $target_action = '', $total_pages, $cur_page = 1, $limit = 10, $adjacents = 4) {
 	if ('' != $target_action) {
 		$target_action = '&' . $target_action;
 	}

@@ -3,7 +3,7 @@
     <header id="header">
         <hgroup id="hgroup">
             <h1>个人博客网</h1>
-            <H4>用来完成毕设的个人博客网站</H4>
+            <H4>在此，尽情书写你的人生！</H4>
         </hgroup>
         <nav id="nav_menu" style="float: none">
             <ul id="nav_menu_ul">

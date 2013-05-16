@@ -17,7 +17,7 @@ function echo_cat_option($a, $str = '', $arr) {
     if ($str != '')
         $str2 = "└";
     echo "<option value='" . $a['id'] . "'>" . $str . $str2 . $a['name'] . "</option>";
-    if (is_array($a['child'])) {
+    if (isset ( $a ['child'] ) && is_array($a['child'])) {
         $str .= "&nbsp;";
         foreach ($a ['child'] as $key => $value) {
             echo_cat_option($arr[$key], $str, $arr);
@@ -47,9 +47,9 @@ function echo_cat_option($a, $str = '', $arr) {
 					width : '100%',
 					height : '450px',
 					resizeType : 0,
-					cssPath : '../includes/kindeditor/plugins/code/prettify.css',
-					uploadJson : '../includes/kindeditor/php/upload_json.php',
-					fileManagerJson : '../includes/kindeditor/php/file_manager_json.php',
+					cssPath : '/pblog/includes/kindeditor/plugins/code/prettify.css',
+					uploadJson : '/pblog/includes/kindeditor/php/upload_json.php',
+					fileManagerJson : '/pblog/includes/kindeditor/php/file_manager_json.php',
 					allowFileManager : true,
 					afterCreate : function() {// 实现Ctrl + Enter 发表
 						var self = this;
@@ -68,7 +68,7 @@ function echo_cat_option($a, $str = '', $arr) {
 			$(function() {
 
 				$("#list").accordion({
-					active : 1
+					active : 2
 				});
 
 				$("#post_title").focus(function() {
@@ -102,11 +102,11 @@ function echo_cat_option($a, $str = '', $arr) {
 							if (!data) {
 								alert("添加失败");
 							} else {
-								alert(data);
 								obj = json_to_object(data);
 								if (obj.pcount == 0) {
 									option_str = "<option value='" + obj.id + "'>" + obj.name + "</option>";
 									$("#cat_select").append(option_str);
+									$("#cat_select").val(obj.id);
 									$("#cat_parent").append(option_str);
 								} else {
 									var pre_nbsp = "";
@@ -115,6 +115,7 @@ function echo_cat_option($a, $str = '', $arr) {
 									}
 									option_str = "<option value='" + obj.id + "'>" + pre_nbsp + "└" + obj.name + "</option>";
 									$("#cat_select option[value='" + obj.parent + "']").after(option_str);
+									$("#cat_select").val(obj.id);
 									$("#cat_parent option[value='" + obj.parent + "']").after(option_str);
 								}
 							}
@@ -168,7 +169,7 @@ function echo_cat_option($a, $str = '', $arr) {
 
 				$("#post_submit_button").click(function() {
 					editor.sync();
-					content = $("#post_date").val(getCurrentFormatDate());
+					$("#post_date").val(getCurrentFormatDate());
 					$("#form_post_submit").submit();
 				});
 

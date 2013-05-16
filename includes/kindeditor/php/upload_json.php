@@ -9,21 +9,20 @@
 
 require_once 'JSON.php';
 
-$php_path = dirname(__FILE__) . '/';
-$php_url = dirname($_SERVER['PHP_SELF']) . '/';
+$php_path = dirname(dirname(dirname(dirname(__FILE__)))) . '/';
+$php_url = dirname(dirname(dirname(dirname($_SERVER['PHP_SELF'])))) . '/';
 
 //文件保存目录路径
-// $save_path = $php_path . '../attached/';
-$save_path = dirname(dirname(dirname(dirname(__FILE__)))) . '/' . 'upload/';
+$save_path = $php_path . 'upload/';
 //文件保存目录URL
-// $save_url = $php_url . '../attached/';
-$save_url = dirname(dirname(dirname(dirname($_SERVER['PHP_SELF'])))) . '/' . 'upload/';
+$save_url = $php_url . 'upload/';
+echo "<p>根目录路径:" . $save_path . "<br />根目录URL:" . $save_url . "</p>";
 //定义允许上传的文件扩展名
 $ext_arr = array(
 	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
 	'flash' => array('swf', 'flv'),
 	'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb'),
-	'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2'),
+	'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'htm', 'html', 'txt', 'pdf', 'zip', 'rar', 'gz', 'bz2'),
 );
 //最大文件大小
 $max_size = 1000000;

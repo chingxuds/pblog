@@ -13,6 +13,9 @@ if (! $_SESSION ["isLogin"]) {
 <div>
 					<a href="#" id="dialog_link_login">登录</a>
 				</div>
+<div>
+					<a href="#" id="dialog_link_register">注册</a>
+				</div>
 				<div style="display: block">&nbsp;</div>
 				<div id="dialog_login" title="登录">
 					<!-- 登录表单 -->
@@ -199,6 +202,7 @@ if (! $_SESSION ["isLogin"]) {
 							buttons : [{
 								text : "登录",
 								click : function() {
+									$("#login_msg").html("正在登录，请稍等...");
 									data_str = "action=ajax_login&username=" + $('#username_input').val() + "&userpass=" + $('#userpass_input').val();
 									$.ajax({
 										type : 'post',
@@ -331,6 +335,10 @@ if (! $_SESSION ["isLogin"]) {
 						// 打开对话框的链接
 						$("#dialog_link_login").click(function(event) {
 							$("#dialog_login").dialog("open");
+							event.preventDefault();
+						});
+						$("#dialog_link_register").click(function(event) {
+							$("#dialog_register").dialog("open");
 							event.preventDefault();
 						});
 

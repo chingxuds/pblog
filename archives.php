@@ -7,7 +7,7 @@ $lists = application('archives');
 <html>
 <head>
 <meta charset="utf-8">
-<title>首页</title>
+<title>归档列表</title>
 <link href="/pblog/includes/jquery/jquery-ui.min.css" rel="stylesheet"
 	type="text/css">
 <link href="/pblog/includes/css/common.css" rel="stylesheet"

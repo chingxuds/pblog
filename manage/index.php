@@ -22,7 +22,7 @@ switch ($action) {
  * 查看个人资料函数
  */
 function profile_view() {
-    $link = creatLink();
+    $link = createLink();
     $object_id = $_SESSION['user']['id'];
 
     $select_items = "meta_key,meta_value";
@@ -56,10 +56,10 @@ function profile_view() {
 }
 
 /**
- * 评论审核函数
+ * 未审核评论查看函数
  */
 function comment_unapproved_view() {
-    $link = creatLink();
+    $link = createLink();
     $id = $_SESSION['user']['id'];
 
     $sql = "SELECT comment_id,post_id,comment_author,comment_author_email,comment_author_IP,DATE_FORMAT(comment_date,'%Y年%m月%d日 %H:%i') AS date,comment_content,user_id FROM pb_comments WHERE comment_approved='unapproved' AND post_id IN (SELECT post_id FROM pb_posts WHERE post_author=$id)";

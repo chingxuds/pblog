@@ -7,7 +7,7 @@ $lists = $_SESSION['search_list'];
 <html>
 <head>
 <meta charset="utf-8">
-<title>首页</title>
+<title>搜索结果</title>
 <link href="/pblog/includes/jquery/jquery-ui.min.css" rel="stylesheet"
 	type="text/css">
 <link href="/pblog/includes/css/common.css" rel="stylesheet"

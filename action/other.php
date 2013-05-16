@@ -13,7 +13,7 @@
  *        	元信息键值
  */
 function meta_update($object_type, $object_id, $meta_key, $meta_value) {
-	$link = creatLink();
+	$link = createLink();
 	$tbl_name = "pb_meta";
 	$select_items = "meta_id";
 	$where = "WHERE object_type='$object_type' AND object_id='$object_id' AND meta_key='$meta_key'";

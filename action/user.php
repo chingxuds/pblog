@@ -2,6 +2,7 @@
 require_once 'inc/encrypt.php';
 require_once 'inc/dateformat.php';
 require_once 'inc/db.php';
+require_once 'inc/paginate.php';
 require_once 'inc/session.php';
 require_once 'other.php';
 // require_once 'inc/protect.php';
@@ -27,6 +28,12 @@ switch ($action) {
 	case 'ajax_check_username' :
 		ajax_check_username ();
 		break;
+	case 'check_all_users' :
+		check_all_users ();
+		break;
+	case 'ajax_update_status' :
+		ajax_update_status ();
+		break;
 	
 	default :
 		break;
@@ -36,7 +43,7 @@ switch ($action) {
  * 登录函数
  */
 function login() {
-	$link = creatLink ();
+	$link = createLink ();
 	// ** 获取前台传入数据 ** //
 	$username = get_parameter_once ( 'username_input' );
 	$userpass = code_md5 ( get_parameter_once ( 'userpass_input' ) );
@@ -63,7 +70,7 @@ function login() {
  * 登出函数
  */
 function logout() {
-	$link = creatLink ();
+	$link = createLink ();
 	$_SESSION ["isLogin"] = FALSE;
 	if (isset ( $_SESSION ["user"] ))
 		unset ( $_SESSION ["user"] );
@@ -76,7 +83,7 @@ function logout() {
  * 注册函数
  */
 function register() {
-	$link = creatLink ();
+	$link = createLink ();
 	// ** 获取前台传入数据 ** //
 	$username = get_parameter_once ( 'username_input' );
 	$userpass = code_md5 ( get_parameter_once ( 'userpass_input' ) );
@@ -113,7 +120,7 @@ function register() {
  * 个人资料更新函数
  */
 function profile_update() {
-	$link = creatLink ();
+	$link = createLink ();
 	$object_type = "user";
 	$object_id = $_SESSION ['user'] ['id'];
 	
@@ -164,7 +171,7 @@ function profile_update() {
  * Ajax登录检查
  */
 function ajax_login() {
-	$link = creatLink ();
+	$link = createLink ();
 	// ** 获取前台传入数据 ** //
 	$username = get_parameter_once ( 'username' );
 	$userpass = code_md5 ( get_parameter_once ( 'userpass' ) );
@@ -183,9 +190,11 @@ function ajax_login() {
 	closeLink ( $link );
 }
 
-/**Ajax检查用户名*/
+/**
+ * Ajax检查用户名
+ */
 function ajax_check_username() {
-	$link = creatLink ();
+	$link = createLink ();
 	// ** 获取前台传入数据 ** //
 	$username = get_parameter_once ( 'username' );
 	
@@ -201,5 +210,76 @@ function ajax_check_username() {
 		echo FALSE;
 	}
 	closeLink ( $link );
+}
+
+/**
+ * 查看所用用户
+ */
+function check_all_users() {
+	$link = createLink ();
+	
+	$cur_page = get_parameter_once ( 'page' );
+	if (! $cur_page) {
+		$cur_page = 1;
+	}
+	$limit = 5;
+	
+	if ($_SESSION ['user'] ['status'] != 0) {
+		header ( "Location: /pblog/" );
+	} else {
+		$tbl_name = 'pb_users';
+		$select_items = "user_id,user_login,user_nicename,user_email,user_registered,user_status";
+		$where = '';
+		
+		$target_page = "/pblog/action/user.php";
+		$target_action = "action=check_all_users";
+		
+		$total_pages = get_total_pages ( $link, $tbl_name, $where );
+		$page_str = get_pages_string ( $target_page, $target_action, $total_pages, $cur_page, $limit );
+		
+		$result = get_querry_result ( $link, $tbl_name, $select_items, $where, $cur_page, $limit );
+		$arr = mysqli_fetch_assoc ( $result );
+		while ( $arr ) {
+			$user ['id'] = $arr ['user_id'];
+			$user ['name'] = $arr ['user_login'];
+			$user ['nicename'] = $arr ['user_nicename'];
+			$user ['email'] = $arr ['user_email'];
+			$user ['time'] = $arr ['user_registered'];
+			$user ['status'] = $arr ['user_status'];
+			
+			$users [$user ['id']] = $user;
+			$arr = mysqli_fetch_assoc ( $result );
+		}
+		
+		$_SESSION ['users_list'] = $users;
+		$_SESSION ['all_users_pagestr'] = $page_str;
+		closeLink ( $link );
+		header ( "Location: /pblog/manage/users-list.php" );
+	}
+}
+
+/**
+ * Ajax更新用户级别函数
+ */
+function ajax_update_status() {
+	$link = createLink ();
+	
+	$uid = get_parameter_once ( 'uid' );
+	$status = get_parameter_once ( 'status' );
+	
+	$tbl_name = "pb_users";
+	$set = "user_status=$status";
+	$where = "WHERE user_id=$uid";
+	$sql = create_update_string ( $tbl_name, $set, $where );
+	
+	$result = doQuery ( $link, $sql );
+	
+	if ($result) {
+		closeLink ( $link );
+		echo TRUE;
+	} else {
+		closeLink ( $link );
+		echo FALSE;
+	}
 }
 ?>

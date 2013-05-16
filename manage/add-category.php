@@ -1,7 +1,7 @@
 <?php
 require_once '../action/inc/session.php';
 require_once '../action/inc/protect.php';
-$cats_in_app = application ( 'categories' );
+$cats_arr = application ( 'categories' );
 /**
  * 显示类别选择项函数
  *
@@ -54,7 +54,7 @@ function echo_cat_option($a, $str = '', $arr) {
 <html>
 <head>
 <meta charset="utf-8">
-<title>分类管理</title>
+<title>类别添加</title>
 <link href="/pblog/includes/jquery/jquery-ui.min.css" rel="stylesheet"
 	type="text/css">
 <link href="/pblog/includes/css/common.css" rel="stylesheet"
@@ -84,11 +84,9 @@ function echo_cat_option($a, $str = '', $arr) {
 	$(function() {
 		$("#list").accordion({ active: 4 });
 
-		$("#cat_add_button").button();
-
-		<?php
-		if ($_SESSION ['user'] ['status'] == 0) {
-			?>
+		<?php 
+			if($_SESSION['user']['status'] == 0){
+		?>
 		$(".cat_del").click(function(){
 			id = $(this).attr("id");
 			data_str = "action=ajax_del_cat&id=" + id;
@@ -136,9 +134,6 @@ function echo_cat_option($a, $str = '', $arr) {
 
 		$("#cat_edit_submit").click(function(){
 			id = $("#cat_edit_id").val();
-			pre_name = $("#n_"+id).html();
-			reg = /^[-]+/;
-			pre_name = (pre_name.match(reg)==null)?"":pre_name.match(reg);
 			name = $("#cat_edit_name_change").val()?"&name="+$("#cat_edit_name_change").val():"";
 			slug = $("#cat_edit_slug_change").val()?"&slug="+$("#cat_edit_slug_change").val():"";
 			desc = $("#cat_edit_description_change").val()?"&description="+$("#cat_edit_description_change").val():"";
@@ -153,13 +148,9 @@ function echo_cat_option($a, $str = '', $arr) {
 				success : function(data) {
 					if (data) {
 						if(name!=""){
-							$("#n_"+id).html(pre_name+$("#cat_edit_name_change").val());
+							$("#n_"+id).html($("#cat_edit_name_change").val());
 						}
 						$("#cat_edit_table").css("display","none");
-						$("#cat_edit_name_change").attr("id","cat_edit_name");
-						$("#cat_edit_slug_change").attr("id","cat_edit_slug");
-						$("#cat_edit_description_change").attr("id","cat_edit_description");
-						$("#cat_edit_parent_change").attr("id","cat_edit_parent");
 					}else{
 						alert("更新失败");
 					}
@@ -172,45 +163,6 @@ function echo_cat_option($a, $str = '', $arr) {
 
 		$("#cat_edit_cancle").click(function() {
 			$("#cat_edit_table").css("display","none");
-		});
-
-		$("#cat_add_button").click(function() {
-			cname = $("#cat_add_name").val();
-			cparent = $("#cat_add_parent").val();
-			data_str = "action=ajax_cat_add&cat_name=" + cname + "&cat_parent=" + cparent;
-			alert(data_str);
-			$.ajax({
-				type : 'post',
-				url : '/pblog/action/term.php',
-				data : data_str,
-				success : function(data) {
-					if (!data) {
-						alert("添加失败");
-					} else {
-						alert(data);
-						obj = json_to_object(data);
-						if (obj.pcount == 0) {
-							option_str = "<option value='" + obj.id + "'>" + obj.name + "</option>";
-							table_str = "<tr id='t_" + obj.id + "'><td id=\"n_" + obj.id + "\">" + obj.name + "</td><td style='float:right'><a id='" + obj.id + "' class='cat_edit' href='#t_" + obj.id + "'>编辑</a><?php if ($_SESSION ['user'] ['status'] == 0) {?>&nbsp;|&nbsp;<a id='" + obj.id + "' class='cat_del'>删除</a><?php }?></td></tr>";
-							$("#cat_add_parent").append(option_str);
-							$("#cat_edit_parent").append(option_str);
-							$("#cat_tbody").append(table_str);
-						} else {
-							var pre_nbsp = "";
-							var pre__ = "";
-							while (obj.pcount--) {
-								pre_nbsp += "&nbsp;";
-								pre__ += "-";
-							}
-							option_str = "<option value='" + obj.id + "'>" + pre_nbsp + "└" + obj.name + "</option>";
-							table_str = "<tr id='t_" + obj.id + "'><td id=\"n_" + obj.id + "\">" + pre__ + obj.name + "</td><td style='float:right'><a id='" + obj.id + "' class='cat_edit' href='#t_" + obj.id + "'>编辑</a><?php if ($_SESSION ['user'] ['status'] == 0) {?>&nbsp;|&nbsp;<a id='" + obj.id + "' class='cat_del'>删除</a><?php }?></td></tr>";
-							$("#cat_add_parent option[value='" + obj.parent + "']").after(option_str);
-							$("#cat_edit_parent option[value='" + obj.parent + "']").after(option_str);
-							$("#t_"+obj.parent).after(table_str);
-						}
-					}
-				}
-			});
 		});
 
 	}); 
@@ -252,29 +204,13 @@ function echo_cat_option($a, $str = '', $arr) {
 					<tr>
 						<td>父类别</td>
 						<td><select id="cat_edit_parent" class="cat_edit"><option
-									value="0">未分类</option> <?php foreach ( $cats_in_app [0] ['child'] as $key => $value ) { echo_cat_option ( $cats_in_app [$key], '', $cats_in_app );}?></select></td>
+									value="0">未分类</option> <?php foreach ( $cats_arr [0] ['child'] as $key => $value ) { echo_cat_option ( $cats_arr [$key], '', $cats_arr );}?></select></td>
 					</tr>
 					<tr>
 						<td><input type="button" id="cat_edit_submit" value="更新" /></td>
 						<td><input type="button" id="cat_edit_cancle" value="取消" /></td>
 					</tr>
 				</table>
-				<div>
-				<div style="margin-left: 20px;float:left;">
-					<input type="button" class="post-button-style" id="cat_add_button"
-						value="添加" /> <input type="text" id="cat_add_name"
-						class="post-input-style"  style="width: 450px;margin-right:0px;"/>
-				</div>
-				<div style="float:right;">
-					<select id="cat_add_parent" class="post-input-style" style="margin:0px;paddin:0px;height: 41px;width:129px">
-						<option value="0">未分类</option>
-                         <?php
-							foreach ( $cats_in_app [0] ['child'] as $key => $value ) {
-								echo_cat_option ( $cats_in_app [$key], '', $cats_in_app );
-							}
-						?>
-                                            </select>
-				</div></div>
 			<?php if(!$_SESSION['all_cats_overview']){?>
 				<div class="ui-state-highlight ui-corner-all post-lists"
 					style="margin-left: 20px; margin-top: 20px; padding: 0 .7em;">
@@ -295,7 +231,7 @@ function echo_cat_option($a, $str = '', $arr) {
 								<td style='float: right'>操作</td>
 							</tr>
 						</thead>
-						<tbody id="cat_tbody">
+						<tbody>
 							<?php
 				$cats = $_SESSION ['all_cats_overview'];
 				foreach ( $cats [0] ['child'] as $id => $cat ) {

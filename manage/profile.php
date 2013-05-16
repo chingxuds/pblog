@@ -17,7 +17,7 @@ require_once '../action/inc/protect.php';
         <script>
 			$(function() {
 
-$( "#list" ).accordion({ active: 0 });
+$( "#list" ).accordion({ active: 1 });
 
 $("#type a[text='asd']").addClass("");
 
